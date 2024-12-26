@@ -1,9 +1,10 @@
+require('dotenv').config();
 const express = require('express');
 const connectDB = require('./mongodb'); // Import the Mongoose connection
 const authRoutes = require('./routes/auth');
 const app = express();
 const port = 8080;
-require('dotenv').config();
+
 
 const sgMail = require('@sendgrid/mail')
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
