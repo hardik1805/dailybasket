@@ -1,0 +1,150 @@
+import { BannerAd1, BannerAd2, BannerAd3 } from "../assets/images";
+import { bestSellingProduct, productSlider } from "../common/constant";
+import ProductCard from "../common/productCard";
+import CategorySlider from "../component/categorySlider";
+import HeroBanner from "../component/heroBanner";
+import ProductSlider from "../component/productSlider";
+
+const LandingPage = () => {
+
+    return <>
+        <HeroBanner />
+        <CategorySlider />
+
+        <section className="pb-5">
+            <div className="container-lg">
+                <div className="row">
+                    <div className="col-md-12">
+                        <div className="section-header d-flex flex-wrap justify-content-between my-4">
+                            <h2 className="section-title">Best selling products</h2>
+                            <div className="d-flex align-items-center">
+                                <a href="/" className="btn btn-primary rounded-1">View All</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col-md-12">
+                        <div className="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5">
+                            {bestSellingProduct.map((item) => {
+                                return <div key={item.name} className="col">
+                                    <ProductCard item={item} />
+                                </div>
+                            })}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section className="py-3">
+            <div className="container-lg">
+                <div className="row">
+                    <div className="col-md-12">
+
+                        <div className="banner-blocks">
+
+                            <div className="banner-ad d-flex align-items-center large bg-info block-1" style={{ background: `url(${BannerAd1}) no-repeat`, backgroundSize: 'cover' }}>
+                                <div className="banner-content p-5">
+                                    <div className="content-wrapper text-light">
+                                        <h3 className="banner-title text-light">Items on SALE</h3>
+                                        <p>Discounts up to 30%</p>
+                                        <a href="/" className="btn-link text-white">Shop Now</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="banner-ad bg-success-subtle block-2" style={{ background: `url(${BannerAd2}) no-repeat`, backgroundSize: 'cover' }}>
+                                <div className="banner-content align-items-center p-5">
+                                    <div className="content-wrapper text-light">
+                                        <h3 className="banner-title text-light">Combo offers</h3>
+                                        <p>Discounts up to 50%</p>
+                                        <a href="/" className="btn-link text-white">Shop Now</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="banner-ad bg-danger block-3" style={{ background: `url(${BannerAd3}) no-repeat`, backgroundSize: 'cover' }}>
+                                <div className="banner-content align-items-center p-5">
+                                    <div className="content-wrapper text-light">
+                                        <h3 className="banner-title text-light">Discount Coupons</h3>
+                                        <p>Discounts up to 40%</p>
+                                        <a href="/" className="btn-link text-white">Shop Now</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {productSlider.map((item) => { return <ProductSlider title={item.title} data={item.products} /> })}
+
+        <section className="py-5">
+            <div className="container-lg">
+                <div className="row row-cols-1 row-cols-sm-3 row-cols-lg-5">
+                    <div className="col">
+                        <div className="card mb-3 border border-dark-subtle p-3">
+                            <div className="text-dark mb-3">
+                                <svg width="32" height="32"><use xlinkHref="#package"></use></svg>
+                            </div>
+                            <div className="card-body p-0">
+                                <h5>Free delivery</h5>
+                                <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col">
+                        <div className="card mb-3 border border-dark-subtle p-3">
+                            <div className="text-dark mb-3">
+                                <svg width="32" height="32"><use xlinkHref="#secure"></use></svg>
+                            </div>
+                            <div className="card-body p-0">
+                                <h5>100% secure payment</h5>
+                                <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col">
+                        <div className="card mb-3 border border-dark-subtle p-3">
+                            <div className="text-dark mb-3">
+                                <svg width="32" height="32"><use xlinkHref="#quality"></use></svg>
+                            </div>
+                            <div className="card-body p-0">
+                                <h5>Quality guarantee</h5>
+                                <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col">
+                        <div className="card mb-3 border border-dark-subtle p-3">
+                            <div className="text-dark mb-3">
+                                <svg width="32" height="32"><use xlinkHref="#savings"></use></svg>
+                            </div>
+                            <div className="card-body p-0">
+                                <h5>guaranteed savings</h5>
+                                <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col">
+                        <div className="card mb-3 border border-dark-subtle p-3">
+                            <div className="text-dark mb-3">
+                                <svg width="32" height="32"><use xlinkHref="#offers"></use></svg>
+                            </div>
+                            <div className="card-body p-0">
+                                <h5>Daily offers</h5>
+                                <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </>
+}
+
+export default LandingPage;
