@@ -1,4 +1,4 @@
-import { bestSellingProduct } from "../../common/constant"
+import { products } from "../../common/constant"
 import ProductCard from "../../common/productCard"
 import Breadcrumb from "../../component/breadcrumbs"
 import Sidebar from "./components/sidebar"
@@ -17,8 +17,8 @@ const ProductListing = () => {
                     <main className="col-md-10">
                         <Filter />
                         <div className="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5">
-                            {bestSellingProduct.map((item) => {
-                                return <div key={item.name} className="col">
+                            {products.map((item) => {
+                                return item.isBestSelling && <div key={item.name} className="col">
                                     <ProductCard item={item} />
                                 </div>
                             })}
