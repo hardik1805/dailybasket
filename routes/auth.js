@@ -2,11 +2,10 @@ const {Router} = require('express');
 const User = require('../models/User');
 const { hashPassword, comparePassword } = require('../utils/passwordUtils');
 const {generateTimeCode} = require("../utils/commonFunction");
-const sgMail = require("@sendgrid/mail");
+// Read the HTML template
 const fs = require('fs');
 const path = require('path');
-// Read the HTML template
-
+const sgMail = require("@sendgrid/mail");
 
 const router = Router();
 
@@ -95,7 +94,7 @@ router.post('/verifyemail', async (req, res) => {
         };
         sgMail.send(msg)
             .then(() => {
-                return res.status(200).json({message: 'Verification email sent successfully'});
+                return res.status(200).json({message: 'Verification code sent successfully'});
             })
             .catch((error) => {
                 console.error(error);
@@ -163,6 +162,63 @@ router.post('/resetpassword', async (req, res) => {
     } catch (e) {
         console.log('Error in reset password:', e);
         res.status(500).json({ message: 'Server error', error: e.message });
+    }
+});
+
+// Update User Details API
+router.put('/update', async (req, res) => {
+    try {
+        const {email, ...updateFields} = req.body;
+
+        // Validate email
+        if (!email) {
+            return res.status(400).json({message: 'Email is required'});
+        }
+
+        // Find the user
+        const user = await User.findOne({email});
+        if (!user) {
+            return res.status(404).json({message: 'User not found'});
+        }
+
+        // Allowed keys for update
+        const allowedKeys = [
+            'firstName', 'lastName', 'phone', 'address', 'postcode',
+            'paymentDetails.cardHolder', 'paymentDetails.cardNumber',
+            'paymentDetails.expiryDate', 'paymentDetails.cvv'
+        ];
+
+        // Validate and filter update fields
+        const updates = {};
+        Object.keys(updateFields).forEach(key => {
+            if (allowedKeys.includes(key)) {
+                updates[key] = updateFields[key];
+            }
+        });
+
+        // Validate payment details format
+        if (updates.paymentDetails) {
+            const {cardHolder, cardNumber, expiryDate, cvv} = updates.paymentDetails;
+            if (cardNumber && typeof cardNumber !== 'number') {
+                return res.status(400).json({message: 'Invalid card number'});
+            }
+            if (expiryDate && typeof expiryDate !== 'number') {
+                return res.status(400).json({message: 'Invalid expiry date'});
+            }
+            if (cvv && typeof cvv !== 'number') {
+                return res.status(400).json({message: 'Invalid CVV'});
+            }
+        }
+
+        // Update user details
+        Object.keys(updates).forEach(key => {
+            user[key] = updates[key];
+        });
+        await user.save();
+
+        res.status(200).json({message: 'User updated successfully'});
+    } catch (error) {
+        res.status(500).json({message: 'Server error', error: error.message});
     }
 });
 
