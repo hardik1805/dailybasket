@@ -1,5 +1,6 @@
-import {BannerAd1, BannerAd2, BannerAd3} from "../assets/images";
-import {products, productSlider} from "../common/constant";
+import { Link } from "react-router-dom";
+import { BannerAd1, BannerAd2, BannerAd3 } from "../assets/images";
+import { products } from "../common/constant";
 import ProductCard from "../common/productCard";
 import CategorySlider from "../component/categorySlider";
 import HeroBanner from "../component/heroBanner";
@@ -17,7 +18,7 @@ const LandingPage = () => {
                         <div className="section-header d-flex flex-wrap justify-content-between my-4">
                             <h2 className="section-title">Best selling products</h2>
                             <div className="d-flex align-items-center">
-                                <a href="/" className="btn btn-primary rounded-1">View All</a>
+                                <Link to="/category" className="btn btn-primary rounded-1">View All</Link>
                             </div>
                         </div>
                     </div>

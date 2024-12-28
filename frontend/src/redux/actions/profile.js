@@ -66,6 +66,12 @@ export function sendVerifyEmail(data, next) {
     })
 }
 
+export function verifyCode(data, next) {
+    signUpService.verifyCode(data).then(response => {
+        if (next) next(response)
+    })
+}
+
 export function signUp(data, next) {
     signUpService.signUp(data).then(response => {
         if (next) next(response)
