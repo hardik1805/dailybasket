@@ -101,15 +101,7 @@ export const productSlider = [
     {
         title: "Featured Products",
         products: bestSellingProduct,
-    },
-    {
-        title: "Most Popular Products",
-        products: bestSellingProduct,
-    },
-    {
-        title: "Just Arrived Products",
-        products: bestSellingProduct,
-    },
+    }
 ]
 
 export const cartItems = [

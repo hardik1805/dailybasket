@@ -4,6 +4,8 @@ import { RouterProvider } from "react-router-dom";
 import './index.scss';
 import router from './routes';
 import reportWebVitals from './reportWebVitals';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<RouterProvider router={router} />);
