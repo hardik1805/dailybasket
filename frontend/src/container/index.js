@@ -1,6 +1,8 @@
 import SignIn from './authantication/signin';
 import SignUp from './authantication/signUp';
-import ForgotPassword from './authantication/forgotPassword';
+import EmailVerification from './authantication/emailVerification';
+import VerifyCode from './authantication/verifyCode';
+import ResetPassword from './authantication/resetPassword';
 
 import LandingPage from './landingPage';
 
@@ -16,7 +18,9 @@ export {
     LandingPage,
     SignIn,
     SignUp,
-    ForgotPassword,
+    EmailVerification,
+    VerifyCode,
+    ResetPassword,
     ProductListing,
     ProductDetail,
     Cart,

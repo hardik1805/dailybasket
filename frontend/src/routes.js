@@ -1,6 +1,6 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import Layout from "./common/layout";
-import { Cart, Checkout, ForgotPassword, LandingPage, OrderConfirmation, ProductDetail, ProductListing, SignIn, SignUp } from "./container";
+import { Cart, Checkout, EmailVerification, VerifyCode, ResetPassword, LandingPage, OrderConfirmation, ProductDetail, ProductListing, SignIn, SignUp } from "./container";
 
 const router = createBrowserRouter([
     {
@@ -12,8 +12,16 @@ const router = createBrowserRouter([
         element: <Layout><SignUp /></Layout>
     },
     {
-        path: "/forgot",
-        element: <Layout><ForgotPassword /></Layout>
+        path: "/email-verification",
+        element: <Layout><EmailVerification /></Layout>
+    },
+    {
+        path: "/verify-code",
+        element: <Layout><VerifyCode /></Layout>
+    },
+    {
+        path: "/reset-password",
+        element: <Layout><ResetPassword /></Layout>
     },
     {
         path: "/",

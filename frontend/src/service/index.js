@@ -46,7 +46,7 @@ const baseUrl = {
 export const signUpService = {
     signUp: (data) => api.post(baseUrl.auth + `signup`, data, statusCheck).then(onSuccess, onError),
     signIn: (data) => api.post(baseUrl.auth + `login`, data, statusCheck).then(onSuccess, onError),
-    sendVerifyEmail: (data) => api.post(baseUrl.auth + `sendcode`, data, statusCheck).then(onSuccess, onError), // send verification code
+    sendVerifyEmail: (data) => api.post(baseUrl.auth + `verifyemail`, data, statusCheck).then(onSuccess, onError), // send verification code
     verifyCode: (data) => api.post(baseUrl.auth + `verifycode`, data, statusCheck).then(onSuccess, onError), // verify code
     resetPassword: (data) => api.post(baseUrl.auth + `resetpassword`, data, statusCheck).then(onSuccess, onError),
 }
