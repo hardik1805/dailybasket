@@ -5,6 +5,7 @@ const {generateTimeCode} = require("../utils/commonFunction");
 // Read the HTML template
 const fs = require('fs');
 const path = require('path');
+const jwt = require("jsonwebtoken");
 const sgMail = require("@sendgrid/mail");
 
 const router = Router();
@@ -61,7 +62,12 @@ router.post('/login', async (req, res) => {
         delete userDetails.password; // remove password from the response
         delete userDetails.tempPass // remove temparory password
         console.log('User Details:', userDetails)
-        res.status(200).json({userDetails});
+        jwt.sign(userDetails, process.env.JWT_SECRET,
+            // 1 year in seconds
+            { expiresIn: 31556926 }, (err, token) => {
+                return res.status(200).json({ token: "Bearer " + token, userDetails: userDetails });
+            })
+
     } catch (e) {
         res.status(500).json({ message: 'Server error', error: e.message });
         console.log('Error in login:',e)

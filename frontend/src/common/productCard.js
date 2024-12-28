@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
-const ProductCard = ({ item, style }) => {
+const ProductCard = ({item, style}) => {
     return <div key={item.name} className="product-item" style={style}>
         <figure>
             <Link to={`/product?id=${item.id}`} title="Product Title">
-                <img src={item.image} alt="Product Thumbnail" className="tab-image" />
+                <img src={item.image} alt="Product Thumbnail" className="tab-image"/>
             </Link>
         </figure>
         <div className="d-flex flex-column text-center">
