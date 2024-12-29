@@ -10,11 +10,11 @@ const ProductCard = ({item, style}) => {
         <div className="d-flex flex-column text-center">
             <h3 className="fs-6 fw-normal" style={{ height: '40px' }}>{item.name}</h3>
             <div className="d-flex justify-content-center align-items-center gap-2">
-                <del>${item.unitPrice}</del>
-                <span className="text-dark fw-semibold">${item.discountPrice}</span>
+                {item.discount ? <del>${item.unitPrice}</del> : <span className="text-dark fw-semibold">${item.unitPrice}</span>}
+                {item.discount !== 0 && <span className="text-dark fw-semibold"> ${((item.unitPrice * (1 - item.discount / 100)).toFixed(2))}</span>}
             </div>
         </div>
-        <span className="badge border border-dark-subtle rounded-0 fw-normal px-1 fs-7 lh-1 text-body-tertiary">{item.discount}% OFF</span>
+        {/*<span className="badge border border-dark-subtle rounded-0 fw-normal px-1 fs-7 lh-1 text-body-tertiary">{item.discount}% OFF</span>*/}
         <Link to="/" className="button-area btn btn-primary rounded-1 p-2 fs-7 btn-cart">
             <svg width="18" height="18">
                 <use xlinkHref="#cart"></use>

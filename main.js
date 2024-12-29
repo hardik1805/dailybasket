@@ -30,7 +30,25 @@ passport.use(new JwtStrategy({
 app.use(express.json());
 app.use(bodyParser.json()); // For JSON
 app.use(bodyParser.urlencoded({ extended: true })); // For form data
+// Logger Middleware to log all API calls and responses
+app.use((req, res, next) => {
+    const startTime = Date.now(); // Capture request start time
 
+    // Log request details
+    console.log(`[Request] ${req.method} ${req.url}`);
+    console.log('Body:', req.body);
+
+    // Capture the response
+    const oldSend = res.send;
+    res.send = function (data) {
+        console.log(`[Response] ${req.method} ${req.url} ${res.statusCode}`);
+        console.log('Response Body:', data);
+        console.log(`Time Taken: ${Date.now() - startTime}ms`);
+        oldSend.apply(res, arguments);
+    };
+
+    next(); // Pass control to the next middleware
+});
 
 // Initialize passport
 app.use(passport.initialize());

@@ -1,11 +1,11 @@
-export const createCookie = (value,name = 'tripssotoken', day = 90) => {
+export const createCookie = (value,name = 'dailyBasket', day = 90) => {
     let expiryDate = new Date();
     expiryDate.setDate(expiryDate.getDate() + day);
     expiryDate = expiryDate.toISOString();
     const maxAge = day * 24 * 60 * 60;
     document.cookie = `${name}=${value}; path=/; expires=${expiryDate}; max-age=${maxAge}`;
 };
-export const getCookie = (name = 'tripssotoken') => {
+export const getCookie = (name = 'dailyBasket') => {
     let nameEq = name + '=';
     let decodedCookie = decodeURIComponent(document.cookie);
     let ca = decodedCookie.split(';');
@@ -26,7 +26,7 @@ export const eraseCookie = (name) => {
     document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 };
 
-export const checkCookie = (name = 'tripssotoken') => {
+export const checkCookie = (name = 'dailyBasket') => {
     return getCookie(name).length !== 0;
 };
 export const deleteAllCookies = () => {

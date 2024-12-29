@@ -1,10 +1,11 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import Layout from "./common/layout";
 import { Cart, Checkout, EmailVerification, VerifyCode, ResetPassword, LandingPage, OrderConfirmation, ProductDetail, ProductListing, SignIn, SignUp } from "./container";
+import Profile from "./container/profile/profile";
 
 const router = createBrowserRouter([
     {
-        path: "/signin",
+        path: "/login",
         element: <Layout><SignIn /></Layout>
     },
     {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
     {
         path: "/order-detail",
         element: <Layout><OrderConfirmation /></Layout>
+    },
+    {
+        path: "/profile",
+        element: <Layout><Profile /></Layout>
     },
     {
         path: "*",
