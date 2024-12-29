@@ -239,7 +239,7 @@ h6 {
   text-align: left;
 }
 
-.error-message{
+.error-message {
   font-weight: 600;
   font-size: 13px;
   line-height: 1.2;
@@ -260,7 +260,8 @@ h6 {
 }
 
 
-.slick-prev:before, .slick-next:before{
+.slick-prev:before,
+.slick-next:before {
   color: black !important;
   font-size: 30px !important;
 }
@@ -427,6 +428,10 @@ h6 {
   text-transform: capitalize;
   color: #222222;
   margin-top: 20px;
+}
+
+.category-slider {
+  margin: 0 10px;
 }
 
 /* brand carousel */

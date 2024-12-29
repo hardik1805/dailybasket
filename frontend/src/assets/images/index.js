@@ -1,4 +1,4 @@
-import Logo from './logo.svg';
+import Logo from './logo.png';
 import Banner1 from './banner-1.jpg';
 import CategoryThumb1 from './category-thumb-1.jpg';
 import CategoryThumb2 from './category-thumb-2.jpg';

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { BannerAd1, BannerAd2, BannerAd3 } from "../assets/images";
-import { products } from "../common/constant";
+import { products, promotionalBanner } from "../common/constant";
 import ProductCard from "../common/productCard";
 import CategorySlider from "../component/categorySlider";
 import HeroBanner from "../component/heroBanner";
@@ -8,8 +8,8 @@ import ProductSlider from "../component/productSlider";
 
 const LandingPage = () => {
     return <>
-        <HeroBanner/>
-        <CategorySlider/>
+        <HeroBanner />
+        <CategorySlider />
         {/* -------------- Best Selling Item Section --------------------- */}
         <section className="pb-5">
             <div className="container-lg">
@@ -31,7 +31,7 @@ const LandingPage = () => {
                             {products.map((item) =>
                                 item.isBestSelling &&
                                 <div key={item.name} className="col">
-                                    <ProductCard item={item}/>
+                                    <ProductCard item={item} />
                                 </div>
                             )}
                         </div>
@@ -45,39 +45,18 @@ const LandingPage = () => {
                 <div className="row">
                     <div className="col-md-12">
                         <div className="banner-blocks">
-                            <div className="banner-ad d-flex align-items-center large bg-info block-1"
-                                 style={{background: `url(${BannerAd1}) no-repeat`, backgroundSize: 'cover'}}>
-                                <div className="banner-content p-5">
-                                    <div className="content-wrapper text-light">
-                                        <h3 className="banner-title text-light">Items on SALE</h3>
-                                        <p>Discounts up to 30%</p>
-                                        <a href="/" className="btn-link text-white">Shop Now</a>
+                            {promotionalBanner.map((item) => {
+                                return <div key={item.title} className={item.class}
+                                    style={{ background: `url(${item.image}) no-repeat`, backgroundSize: 'cover' }}>
+                                    <div className="banner-content p-5">
+                                        <div className="content-wrapper text-light">
+                                            <h3 className="banner-title text-light">{item.title}</h3>
+                                            <p>{item.discount}</p>
+                                            <Link to={item.link} className="btn-link text-white">Shop Now</Link>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div className="banner-ad bg-success-subtle block-2"
-                                 style={{background: `url(${BannerAd2}) no-repeat`, backgroundSize: 'cover'}}>
-                                <div className="banner-content align-items-center p-5">
-                                    <div className="content-wrapper text-light">
-                                        <h3 className="banner-title text-light">Combo offers</h3>
-                                        <p>Discounts up to 50%</p>
-                                        <a href="/" className="btn-link text-white">Shop Now</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="banner-ad bg-danger block-3"
-                                 style={{background: `url(${BannerAd3}) no-repeat`, backgroundSize: 'cover'}}>
-                                <div className="banner-content align-items-center p-5">
-                                    <div className="content-wrapper text-light">
-                                        <h3 className="banner-title text-light">Discount Coupons</h3>
-                                        <p>Discounts up to 40%</p>
-                                        <a href="/" className="btn-link text-white">Shop Now</a>
-                                    </div>
-                                </div>
-                            </div>
-
+                            })}
                         </div>
                     </div>
                 </div>
@@ -85,7 +64,7 @@ const LandingPage = () => {
         </section>
 
 
-        <ProductSlider title={'Favourite'} data={products}/>
+        <ProductSlider title={'Favourite'} data={products} />
 
 
         <section className="py-5">

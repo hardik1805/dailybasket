@@ -1,7 +1,45 @@
 import {
     CategoryThumb1, CategoryThumb2, CategoryThumb3, CategoryThumb4, CategoryThumb5, CategoryThumb6, CategoryThumb7, CategoryThumb8,
     ProductThumb1, ProductThumb2, ProductThumb3, ProductThumb4, ProductThumb5, ProductThumb6, ProductThumb7, ProductThumb8, ProductThumb9, ProductThumb10, ProductThumb11, ProductThumb12,
+    Banner1,
+    BannerAd3, BannerAd2, BannerAd1,
 } from "../assets/images";
+
+export const heroBanner = {
+    bannerImage: Banner1,
+    title: "<span class='fw- bold text-primary'>Organic</span> Foods at your <span class='fw - bold'>Doorsteps</span>",
+    subTitle: "Dignissim massa diam elementum.",
+    portfolioText: [{
+        views: "14k+",
+        text: "Product Varieties"
+    },
+    {
+        views: "50k+",
+        text: "Happy Customers"
+    },
+    {
+        views: "10+",
+        text: "Store Locations"
+    }],
+    advertisementTag: [{
+        class: "bg-primary",
+        svgImage: <svg width="60" height="60"><use xlinkHref="#fresh"></use></svg>,
+        title: "Fresh from farm",
+        info: "Lorem ipsum dolor sit amet, consectetur adipi elit."
+    },
+    {
+        class: "bg-secondary",
+        svgImage: <svg width="60" height="60"><use xlinkHref="#organic"></use></svg>,
+        title: "100% Organic",
+        info: "Lorem ipsum dolor sit amet, consectetur adipi elit."
+    },
+    {
+        class: "bg-danger",
+        svgImage: <svg width="60" height="60"><use xlinkHref="#delivery"></use></svg>,
+        title: "Free delivery",
+        info: "Lorem ipsum dolor sit amet, consectetur adipi elit."
+    }]
+}
 
 export const category = [
     { id: 1, name: "Fruits & Veges", image: CategoryThumb1 },
@@ -11,7 +49,11 @@ export const category = [
     { id: 5, name: "Meat Products", image: CategoryThumb5 },
     { id: 6, name: "Breads", image: CategoryThumb6 },
     { id: 7, name: "Fruits & Veges", image: CategoryThumb7 },
-    { id: 8, name: "Breads & Sweets", image: CategoryThumb8 }
+    { id: 8, name: "Breads & Sweets", image: CategoryThumb8 },
+    { id: 9, name: "Meat Products", image: CategoryThumb5 },
+    { id: 10, name: "Breads", image: CategoryThumb6 },
+    { id: 11, name: "Fruits & Veges", image: CategoryThumb7 },
+    { id: 12, name: "Breads & Sweets", image: CategoryThumb8 }
 ]
 
 export const products = [
@@ -168,4 +210,10 @@ export const cartItems = [
         qty: 2,
         price: 70.00,
     },
+]
+
+export const promotionalBanner = [
+    { title: "Items on SALE", discount: "Discounts up to 30%", image: BannerAd1, link: "/category", class:"banner-ad d-flex align-items-center large bg-info block-1" },
+    { title: "Combo offers", discount: "Discounts up to 50%", image: BannerAd2, link: "/category", class:"banner-ad bg-success-subtle block-2" },
+    { title: "Discount Coupons", discount: "Discounts up to 40%", image: BannerAd3, link: "/category", class:"banner-ad bg-danger block-3" },
 ]
