@@ -1,6 +1,7 @@
 // eslint-disable-next-line
 import {signUpService} from "../../service";
 import {jwtDecode} from "jwt-decode";
+import {loginSuccess} from "../slices/userSlice";
 
 // export function getUserDetail(data, next) {
 //     return (dispatch, getState) => {
@@ -84,7 +85,7 @@ export function signIn(data, next) {
             switch (response.status) {
                 case 200: {
                     const {userDetails, token} = response.data
-                    dispatch({type: 'SET_USER', payload: userDetails, token: token});
+                    dispatch(loginSuccess(userDetails))
                     if (next) next(response)
                     break
                 }
