@@ -14,7 +14,8 @@ const userSchema = new mongoose.Schema({
         expiryDate: {type: Number, default: null},
         cvv: {type: Number, default: null},
     },
-    tempPass: {type: Number, default: null}
+    tempPass: {type: Number, default: null},
+    tempExpiry: { type: Date, default: null}
 }, {timestamps: true});
 
 const User = mongoose.model('User', userSchema);

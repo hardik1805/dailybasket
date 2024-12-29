@@ -1,7 +1,7 @@
 const {Router} = require('express');
 const User = require('../models/User');
 const {hashPassword, comparePassword} = require('../utils/passwordUtils');
-const {generateTimeCode} = require("../utils/commonFunction");
+const {generateSixDigitCode} = require("../utils/commonFunction");
 // Read the HTML template
 const fs = require('fs');
 const path = require('path');
@@ -64,7 +64,7 @@ router.post('/login', async (req, res) => {
         delete userDetails.tempPass // remove temparory password
         jwt.sign(userDetails, process.env.JWT_SECRET,
             // 1 year in seconds
-            {expiresIn: 31556926}, (err, token) => {
+            {expiresIn: '1y'}, (err, token) => {
                 return res.status(200).json({token: "Bearer " + token, userDetails: userDetails});
             })
 
@@ -85,8 +85,9 @@ router.post('/verifyemail', async (req, res) => {
         if (!existingUser) {
             return res.status(404).json({message: 'User does not exits'});
         }
-        const code = generateTimeCode();
+        const code = generateSixDigitCode();
         existingUser.tempPass = code;
+        existingUser.tempExpiry = new Date(Date.now() + 10 * 60 * 1000);
         await existingUser.save();
 
         const filePath = path.join(__dirname, '../pages/resetPassword.html')
@@ -124,12 +125,19 @@ router.post('/verifycode', async (req, res) => {
         if (!existingUser) {
             return res.status(404).json({message: 'User does not exits'});
         }
-        if (code === existingUser.tempPass && code < generateTimeCode(0)) {
-            existingUser.tempPass = null;
-            await existingUser.save();
-            return res.status(200).json({message: 'Verification successful'});
-        } else if (code > generateTimeCode(0)) {
+        // Check if code has expired
+        if (existingUser.tempExpiry && new Date(existingUser.tempExpiry) < new Date()) {
             return res.status(403).json({message: 'Verification code expired'});
+        }
+
+        // Check if code matches
+        if (code === existingUser.tempPass) {
+            // Clear tempPass and expiryAt after successful verification
+            existingUser.tempPass = null;
+            existingUser.expiryAt = null;
+            await existingUser.save();
+
+            return res.status(200).json({message: 'Verification successful'});
         } else {
             return res.status(403).json({message: 'Verification code is incorrect'});
         }
@@ -168,63 +176,6 @@ router.post('/resetpassword', async (req, res) => {
     } catch (e) {
         console.log('Error in reset password:', e);
         res.status(500).json({message: 'Server error', error: e.message});
-    }
-});
-
-// Update User Details API
-router.put('/update', async (req, res) => {
-    try {
-        const {email, ...updateFields} = req.body;
-
-        // Validate email
-        if (!email) {
-            return res.status(400).json({message: 'Email is required'});
-        }
-
-        // Find the user
-        const user = await User.findOne({email});
-        if (!user) {
-            return res.status(404).json({message: 'User not found'});
-        }
-
-        // Allowed keys for update
-        const allowedKeys = [
-            'firstName', 'lastName', 'phone', 'address', 'postcode',
-            'paymentDetails.cardHolder', 'paymentDetails.cardNumber',
-            'paymentDetails.expiryDate', 'paymentDetails.cvv'
-        ];
-
-        // Validate and filter update fields
-        const updates = {};
-        Object.keys(updateFields).forEach(key => {
-            if (allowedKeys.includes(key)) {
-                updates[key] = updateFields[key];
-            }
-        });
-
-        // Validate payment details format
-        if (updates.paymentDetails) {
-            const {cardHolder, cardNumber, expiryDate, cvv} = updates.paymentDetails;
-            if (cardNumber && typeof cardNumber !== 'number') {
-                return res.status(400).json({message: 'Invalid card number'});
-            }
-            if (expiryDate && typeof expiryDate !== 'number') {
-                return res.status(400).json({message: 'Invalid expiry date'});
-            }
-            if (cvv && typeof cvv !== 'number') {
-                return res.status(400).json({message: 'Invalid CVV'});
-            }
-        }
-
-        // Update user details
-        Object.keys(updates).forEach(key => {
-            user[key] = updates[key];
-        });
-        await user.save();
-
-        res.status(200).json({message: 'User updated successfully'});
-    } catch (error) {
-        res.status(500).json({message: 'Server error', error: error.message});
     }
 });
 
