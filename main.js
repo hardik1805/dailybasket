@@ -18,17 +18,20 @@ const ExtractJwt = passportJWT.ExtractJwt;
 passport.use(new JwtStrategy({
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // Extract token from Authorization header
     secretOrKey: process.env.SECRETORKEY, // The secret key to validate the JWT
-}, (jwtPayload, done) => {
-    // You can verify the user from the payload here (usually you would query the database)
-    // For simplicity, we are assuming the payload contains the user id
-    if (jwtPayload) {
-        const user = User.findById(jwtPayload._id)
-        if (user) {
-            return done(null, user); // User found, continue to the next middleware
+}, async (jwtPayload, done) => {
+    try {
+        if (jwtPayload) {
+            const user = await User.findById(jwtPayload._id).lean()
+            if (user) {
+                return done(null, user); // User found, continue to the next middleware
+            } else {
+                return done(null, false); // User not found, reject the request
+            }
         } else {
-            return done(null, false); // User not found, reject the request
+            return done(null, false);
         }
-    } else {
+    } catch (e) {
+        console.error('Error in JWT strategy:', e);
         return done(null, false);
     }
 }));
@@ -36,7 +39,7 @@ passport.use(new JwtStrategy({
 // Middleware for parsing JSON
 app.use(express.json());
 app.use(bodyParser.json()); // For JSON
-app.use(bodyParser.urlencoded({ extended: true })); // For form data
+app.use(bodyParser.urlencoded({extended: true})); // For form data
 app.use(passport.initialize());
 
 connectDB();

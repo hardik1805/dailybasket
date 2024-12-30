@@ -23,15 +23,9 @@ router.post('/get', async (req, res) => {
 // Update User Details API
 router.post('/update', async (req, res) => {
     try {
-        const {email, ...updateFields} = req.body;
-
-        // Validate email
-        if (!email) {
-            return res.status(400).json({message: 'Email is required'});
-        }
-
+        const {updateFields} = req.body;
         // Find the user
-        const user = await User.findOne({email});
+        const user = await User.findById(req.user._id)
         if (!user) {
             return res.status(404).json({message: 'User not found'});
         }
@@ -40,7 +34,7 @@ router.post('/update', async (req, res) => {
         const allowedKeys = [
             'firstName', 'lastName', 'phone', 'address', 'postcode',
             'paymentDetails.cardHolder', 'paymentDetails.cardNumber',
-            'paymentDetails.expiryDate', 'paymentDetails.cvv'
+            'paymentDetails.expiryDate', 'paymentDetails.cvv',
         ];
 
         // Validate and filter update fields
@@ -79,5 +73,52 @@ router.post('/update', async (req, res) => {
         res.status(500).json({message: 'Server error', error: error.message});
     }
 });
+
+// Manage wishlist (add or remove)
+router.post('/wishlist', async (req, res) => {
+    const userId = req.user._id;  // Get user ID from JWT payload
+    const { productId, action } = req.body; // Get productId and action (true/false)
+
+    if (productId === undefined || action === undefined) {
+        return res.status(400).json({ message: 'Both productId and action are required' });
+    }
+
+    if (typeof action !== 'boolean') {
+        return res.status(400).json({ message: 'Action must be a boolean value (true or false)' });
+    }
+
+    try {
+        // Find the user
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        if (action) {
+            // Add the product to the wishlist if not already present
+            if (!user.wishList.includes(productId)) {
+                user.wishList.push(productId);
+                await user.save();
+                return res.status(200).json({ message: 'Product added to wishlist', wishList: user.wishList });
+            } else {
+                return res.status(400).json({ message: 'Product already in wishlist' });
+            }
+        } else {
+            // Remove the product from the wishlist if present
+            const index = user.wishList.indexOf(productId);
+            if (index !== -1) {
+                user.wishList.splice(index, 1);
+                await user.save();
+                return res.status(200).json({ message: 'Product removed from wishlist', wishList: user.wishList });
+            } else {
+                return res.status(404).json({ message: 'Product not found in wishlist' });
+            }
+        }
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Server error' });
+    }
+});
+
 
 module.exports = router;

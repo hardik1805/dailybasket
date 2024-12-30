@@ -15,7 +15,11 @@ const userSchema = new mongoose.Schema({
         cvv: {type: Number, default: null},
     },
     tempPass: {type: Number, default: null},
-    tempExpiry: { type: Date, default: null}
+    tempExpiry: { type: Date, default: null},
+    wishList: [{
+        type: Number,
+        required: false
+    }]
 }, {timestamps: true});
 
 const User = mongoose.model('User', userSchema);
