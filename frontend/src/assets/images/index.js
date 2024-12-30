@@ -39,8 +39,13 @@ import ProductLarge5 from './product-large-5.jpg';
 import Reviewer1 from './reviewer-1.jpg';
 import Reviewer2 from './reviewer-2.jpg';
 
+import Login from './login.webp';
+import ScheduleDelivery from './schedule-delivery.webp';
+import Orders from './orders.webp';
+
 export {
     Logo,
+    Login,
     Banner1,
     LoginImg,
     CategoryThumb1, CategoryThumb2, CategoryThumb3, CategoryThumb4, CategoryThumb5, CategoryThumb6, CategoryThumb7, CategoryThumb8,
@@ -48,4 +53,5 @@ export {
     BannerAd1, BannerAd2, BannerAd3,
     ProductLarge1, ProductLarge2, ProductLarge3, ProductLarge4, ProductLarge5,
     Reviewer1, Reviewer2,
+    ScheduleDelivery, Orders
 };

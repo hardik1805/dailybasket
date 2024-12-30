@@ -266,6 +266,42 @@ h6 {
   font-size: 30px !important;
 }
 
+.logo-text-header {
+  display: grid;
+  align-content: center;
+  line-height: 1;
+  margin-top: 6px;
+  color: #6bb252;
+  font-size: 23px;
+}
+
+.logo-text-footer {
+  display: grid;
+  align-content: center;
+  line-height: 1;
+  margin-top: 6px;
+  color: #6bb252;
+  font-size: 30px;
+}
+
+.logo-text-header b,
+.logo-text-footer b {
+  color: #f7a422;
+}
+
+.account>li {
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.account>li:hover {
+  background: #f8f8f8;
+}
+
+.account .active {
+  background: #f8f8f8;
+}
+
 @keyframes animation {
 
   0%,

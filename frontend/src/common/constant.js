@@ -213,7 +213,7 @@ export const cartItems = [
 ]
 
 export const promotionalBanner = [
-    { title: "Items on SALE", discount: "Discounts up to 30%", image: BannerAd1, link: "/category", class:"banner-ad d-flex align-items-center large bg-info block-1" },
-    { title: "Combo offers", discount: "Discounts up to 50%", image: BannerAd2, link: "/category", class:"banner-ad bg-success-subtle block-2" },
-    { title: "Discount Coupons", discount: "Discounts up to 40%", image: BannerAd3, link: "/category", class:"banner-ad bg-danger block-3" },
+    { title: "Items on SALE", discount: "Discounts up to 30%", image: BannerAd1, link: "/category", class: "banner-ad d-flex align-items-center large bg-info block-1" },
+    { title: "Combo offers", discount: "Discounts up to 50%", image: BannerAd2, link: "/category", class: "banner-ad bg-success-subtle block-2" },
+    { title: "Discount Coupons", discount: "Discounts up to 40%", image: BannerAd3, link: "/category", class: "banner-ad bg-danger block-3" },
 ]

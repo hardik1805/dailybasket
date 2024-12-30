@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Logo } from "../../assets/images";
 
 const Footer = () => {
@@ -8,7 +9,10 @@ const Footer = () => {
                     <div className="row">
                         <div className="col-lg-3 col-md-6 col-sm-6">
                             <div className="footer-menu">
-                                <img src={Logo} width="240" height="70" alt="logo" />
+                                <Link to="/" className="d-flex align-items-center nav-link">
+                                    <img src={Logo} height="70" alt="logo" />
+                                    <div className="logo-text-footer"><span><b>D</b>aily</span><span><b>B</b>asket</span></div>
+                                </Link>
                                 <div className="social-links mt-3">
                                     <ul className="d-flex list-unstyled gap-2">
                                         <li>

@@ -1,6 +1,6 @@
-import {Link, useNavigate} from "react-router-dom";
-import {Logo} from "../../assets/images";
-import {checkCookie, deleteAllCookies} from "../cookie";
+import { Link, useNavigate } from "react-router-dom";
+import { Login, Logo } from "../../assets/images";
+import { checkCookie, deleteAllCookies } from "../cookie";
 
 const Header = () => {
     const navigate = useNavigate()
@@ -157,13 +157,13 @@ const Header = () => {
                             <div className="collapse" id="beverages-collapse">
                                 <ul className="btn-toggle-nav list-unstyled fw-normal ps-5 pb-1">
                                     <li className="border-bottom py-2"><Link to="/category"
-                                                                             className="dropdown-item">Water</Link></li>
+                                        className="dropdown-item">Water</Link></li>
                                     <li className="border-bottom py-2"><Link to="/category"
-                                                                             className="dropdown-item">Juice</Link></li>
+                                        className="dropdown-item">Juice</Link></li>
                                     <li className="border-bottom py-2"><Link to="/category"
-                                                                             className="dropdown-item">Soda</Link></li>
+                                        className="dropdown-item">Soda</Link></li>
                                     <li className="border-bottom py-2"><Link to="/category"
-                                                                             className="dropdown-item">Tea</Link></li>
+                                        className="dropdown-item">Tea</Link></li>
                                 </ul>
                             </div>
                         </li>
@@ -224,32 +224,33 @@ const Header = () => {
                 <div className="container-fluid">
                     <div className="row py-3 border-bottom">
                         <div
-                            className="col-4 col-sm-2 col-lg-3 text-center text-sm-start d-flex gap-3 justify-content-center justify-content-md-start">
-                            <div className="d-flex align-items-center my-3 my-sm-0">
-                                <Link to="/">
-                                    <img src={Logo} alt="logo" className="img-fluid" style={{height: "50px"}}/>
+                            className="col-4 col-sm-2 col-lg-2 text-center text-sm-start d-flex gap-3 justify-content-center justify-content-md-start">
+                            <div className="my-3 my-sm-0">
+                                <Link to="/" className="d-flex align-items-center nav-link">
+                                    <img src={Logo} alt="logo" className="img-fluid" style={{ height: "50px" }} />
+                                    <div className="logo-text-header"><span><b>D</b>aily</span><span><b>B</b>asket</span></div>
                                 </Link>
                             </div>
                             <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas"
-                                    data-bs-target="#offcanvasNavbar"
-                                    aria-controls="offcanvasNavbar">
+                                data-bs-target="#offcanvasNavbar"
+                                aria-controls="offcanvasNavbar">
                                 <svg width="24" height="24" viewBox="0 0 24 24">
                                     <use xlinkHref="#menu"></use>
                                 </svg>
                             </button>
                         </div>
-                        <div className="col-sm-6 offset-sm-2 offset-md-0 col-lg-3">
+                        <div className="col-sm-6 offset-sm-2 offset-md-0 col-lg-4">
                             <div className="search-bar row bg-light p-2 rounded-4">
                                 <div className="col-11 col-md-11">
                                     <form id="search-form" className="text-center" action="index.html" method="post">
                                         <input type="text" className="form-control border-0 bg-transparent"
-                                               placeholder="Search for more than 20,000 products"/>
+                                            placeholder="Search for more than 20,000 products" />
                                     </form>
                                 </div>
                                 <div className="col-1">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                         <path fill="currentColor"
-                                              d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z"/>
+                                            d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z" />
                                     </svg>
                                 </div>
                             </div>
@@ -259,10 +260,12 @@ const Header = () => {
                             <ul className="d-flex justify-content-end list-unstyled m-0">
                                 <li>
                                     <Link to={checkCookie('dailyBasket') ? "" : "/login"} className="p-2 mx-1"
-                                          id="pages" data-bs-toggle={checkCookie('dailyBasket') ? "dropdown" : ""} aria-expanded="false">
-                                        <svg width="24" height="24">
-                                            <use xlinkHref="#user"></use>
-                                        </svg>
+                                        id="pages" data-bs-toggle={checkCookie('dailyBasket') ? "dropdown" : ""} aria-expanded="false">
+                                        {checkCookie('dailyBasket') ?
+                                            <svg width="24" height="24">
+                                                <use xlinkHref="#user"></use>
+                                            </svg>
+                                            : <img src={Login} height="24px" />}
                                     </Link>
                                     {checkCookie('dailyBasket') ?
                                         <ul className="dropdown-menu border-0 p-3 rounded-0 shadow" aria-labelledby="pages">
@@ -279,7 +282,7 @@ const Header = () => {
                                 </li>
                                 <li>
                                     <Link to="" className="p-2 mx-1" data-bs-toggle="offcanvas"
-                                          data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
+                                        data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
                                         <svg width="24" height="24">
                                             <use xlinkHref="#shopping-bag"></use>
                                         </svg>
