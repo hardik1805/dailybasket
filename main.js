@@ -4,6 +4,8 @@ const passport = require('passport');
 const passportJWT = require('passport-jwt');
 const connectDB = require('./mongodb'); // Import the Mongoose connection
 const authRoutes = require('./routes/auth');
+const profileRoutes = require('./routes/profile');
+const User = require('./models/User')
 const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -15,12 +17,17 @@ const ExtractJwt = passportJWT.ExtractJwt;
 
 passport.use(new JwtStrategy({
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // Extract token from Authorization header
-    secretOrKey: process.env.SECRTORKEY, // The secret key to validate the JWT
+    secretOrKey: process.env.SECRETORKEY, // The secret key to validate the JWT
 }, (jwtPayload, done) => {
     // You can verify the user from the payload here (usually you would query the database)
     // For simplicity, we are assuming the payload contains the user id
     if (jwtPayload) {
-        return done(null, jwtPayload);
+        const user = User.findById(jwtPayload._id)
+        if (user) {
+            return done(null, user); // User found, continue to the next middleware
+        } else {
+            return done(null, false); // User not found, reject the request
+        }
     } else {
         return done(null, false);
     }
@@ -30,58 +37,22 @@ passport.use(new JwtStrategy({
 app.use(express.json());
 app.use(bodyParser.json()); // For JSON
 app.use(bodyParser.urlencoded({ extended: true })); // For form data
-// Logger Middleware to log all API calls and responses
-app.use((req, res, next) => {
-    const startTime = Date.now(); // Capture request start time
-
-    // Log request details
-    console.log(`[Request] ${req.method} ${req.url}`);
-    console.log('Body:', req.body);
-
-    // Capture the response
-    const oldSend = res.send;
-    res.send = function (data) {
-        console.log(`[Response] ${req.method} ${req.url} ${res.statusCode}`);
-        console.log('Response Body:', data);
-        console.log(`Time Taken: ${Date.now() - startTime}ms`);
-        oldSend.apply(res, arguments);
-    };
-
-    next(); // Pass control to the next middleware
-});
-
-// Initialize passport
 app.use(passport.initialize());
 
-// Connect to MongoDB
 connectDB();
 
-// Routes
 
-// Auth routes (No token check here)
-app.use('/api/auth', authRoutes);
-
-// Protected Route (Token is required here)
-app.get('/api/user', passport.authenticate('jwt', {session: false}), (req, res) => {
-    res.send('This is a protected route');
-});
-
-// Middleware to check if token is present and valid for all APIs except /api/auth
+// Logger Middleware to log all API calls and responses
 app.use((req, res, next) => {
-    // Skip token check for /api/auth routes (login, register, resetpassword)
-    if (req.originalUrl.startsWith('/api/auth')) {
-        return next(); // Skip authentication check for auth routes
-    }
-
-    // Use Passport to authenticate JWT token for all other routes
-    passport.authenticate('jwt', {session: false}, (err, user, info) => {
-        if (err || !user) {
-            return res.status(401).json({message: 'Unauthorized, invalid token or no token provided'});
-        }
-        req.user = user; // Attach user info to request object
-        next(); // Continue to the next middleware or route handler
-    })(req, res, next);
+    console.log(`[Request] ${req.method} ${req.url}`);
+    console.log('Body:', req.body);
+    next();
 });
+
+// Routes
+app.use('/api/auth', authRoutes);// Auth routes (No token check here)
+app.use('/api/user', passport.authenticate('jwt', {session: false}), profileRoutes);
+
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {

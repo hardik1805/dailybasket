@@ -62,7 +62,7 @@ router.post('/login', async (req, res) => {
         const userDetails = existingUser.toObject();
         delete userDetails.password; // remove password from the response
         delete userDetails.tempPass // remove temparory password
-        jwt.sign(userDetails, process.env.JWT_SECRET,
+        jwt.sign(userDetails, process.env.SECRETORKEY,
             // 1 year in seconds
             {expiresIn: '1y'}, (err, token) => {
                 return res.status(200).json({token: "Bearer " + token, userDetails: userDetails});

@@ -37,10 +37,11 @@ export const removeToken = () => {
 api.defaults.baseURL = process.env.BACKEND_HOST;
 api.defaults.headers.post["Content-Type"] = "application/json";
 api.defaults.headers.post["Accept"] = "*/*";
-api.defaults.headers.common['Authorization'] = getCookie() || ''
+api.defaults.headers.common['Authorization'] = getCookie('dailyBasket') || ''
 
 const baseUrl = {
     auth: '/api/auth/',
+    user: '/api/user/',
 }
 
 export const signUpService = {
