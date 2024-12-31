@@ -101,6 +101,12 @@ export function signIn(data, next) {
     }
 }
 
+export function updateUserDetails(data, next) {
+    signUpService.updateUserDetails(data).then(response => {
+        if (next) next(response)
+    })
+}
+
 
 // export function signOut(data, next) {
 //     return (dispatch, getState) => {

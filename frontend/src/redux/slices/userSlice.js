@@ -20,8 +20,11 @@ const userSlice = createSlice({
         setEmailForVerification: (state, action) => {
             state.verificationEmail = action.payload;
         },
+        updateUserInfo: (state, action) => {
+            state.userInfo = action.payload;
+        },
     },
 });
 
-export const { loginSuccess, logout, setEmailForVerification } = userSlice.actions;
+export const { loginSuccess, logout, setEmailForVerification, updateUserInfo } = userSlice.actions;
 export default userSlice.reducer;

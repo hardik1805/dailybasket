@@ -302,6 +302,111 @@ h6 {
   background: #f8f8f8;
 }
 
+.tab-description-heading {
+  background: #f8f8f8;
+}
+
+.find-address-section {
+  div {
+    position: relative;
+    display: grid;
+
+    input {
+      margin-bottom: 10px;
+    }
+
+    button {
+      position: absolute;
+      right: 1px;
+    }
+
+    .idpc-error {
+      font-weight: 600;
+      font-size: 13px;
+      line-height: 1.2;
+      color: #fe3434;
+    }
+  }
+}
+
+.delivery-info {
+  position: relative;
+
+  .delivery-info-body {
+    h6 {
+      align-items: center;
+      gap: 5px;
+    }
+
+    .card-text {
+      margin-bottom: 0;
+
+      b {
+        color: #868686;
+      }
+
+      span {
+        color: black;
+      }
+    }
+  }
+
+  button {
+    position: absolute;
+    right: -13px;
+    top: -14px;
+    border: 1px solid;
+    border-radius: 100%;
+    padding: 6px;
+    font-size: 13px;
+    background-color: white;
+    opacity: 0.9;
+  }
+}
+
+.wishlist-card {
+  position: relative;
+
+  .product-item {
+    figure {
+      img {
+        height: 170px;
+      }
+    }
+  }
+
+  button {
+    position: absolute;
+    right: -1px;
+    top: 1px;
+    border: 1px solid;
+    border-radius: 100%;
+    padding: 6px;
+    font-size: 13px;
+    background-color: white;
+    opacity: 0.9;
+    z-index: 99;
+  }
+}
+
+.product-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 16px;
+  gap: 5px;
+
+  a {
+    width: 100%;
+  }
+
+  svg {
+    cursor: pointer;
+  }
+}
+
+
 @keyframes animation {
 
   0%,
@@ -538,15 +643,13 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .product-item {
-  display: grid;
+  margin: 15px 0;
   justify-items: center;
   position: relative;
   padding: 16px;
   background: #FFFFFF;
   border-radius: 16px;
-  padding-bottom: 60px;
-  box-shadow: 0px 0px 22px rgba(0, 0, 0, 0);
-  /* transition: box-shadow 0.3s ease-out, margin 0.3s ease-out; */
+  box-shadow: 0 0 20px 0 rgba(6, 0, 0, 0.08);
 }
 
 .product-item:hover {

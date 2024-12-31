@@ -1,10 +1,10 @@
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
-const ProductCard = ({item, style}) => {
+const ProductCard = ({ item, style, isWishlist = false }) => {
     return <div key={item.name} className="product-item" style={style}>
         <figure>
             <Link to={`/product?id=${item.id}`} title="Product Title">
-                <img src={item.image} alt="Product Thumbnail" className="tab-image"/>
+                <img src={item.image} alt="Product Thumbnail" className="tab-image" />
             </Link>
         </figure>
         <div className="d-flex flex-column text-center">
@@ -15,12 +15,18 @@ const ProductCard = ({item, style}) => {
             </div>
         </div>
         {/*<span className="badge border border-dark-subtle rounded-0 fw-normal px-1 fs-7 lh-1 text-body-tertiary">{item.discount}% OFF</span>*/}
-        <Link to="/" className="button-area btn btn-primary rounded-1 p-2 fs-7 btn-cart">
-            <svg width="18" height="18">
-                <use xlinkHref="#cart"></use>
-            </svg>
-            Add to Cart
-        </Link>
+        <div className="product-card-footer">
+            <Link to="/" className="btn btn-primary rounded-1 p-2 fs-7">
+                <svg width="18" height="18">
+                    <use xlinkHref="#cart"></use>
+                </svg>
+                Add to Cart
+            </Link>
+            {!isWishlist &&
+                <svg width="35" height="35">
+                    <use xlinkHref="#heart"></use>
+                </svg>}
+        </div>
     </div>
 }
 
