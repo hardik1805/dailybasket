@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Logo } from "../../assets/images";
+import { Amex, Discovery, Logo, MasterCard, Visa } from "../../assets/images";
 
 const Footer = () => {
     return (
@@ -7,9 +7,9 @@ const Footer = () => {
             <footer className="py-5">
                 <div className="container-lg">
                     <div className="row">
-                        <div className="col-lg-3 col-md-6 col-sm-6">
+                        <div className="footer-logo-container col-xl-3 col-lg-3 col-md-3">
                             <div className="footer-menu">
-                                <Link to="/" className="d-flex align-items-center nav-link">
+                                <Link to="/" className="logo d-flex align-items-center nav-link">
                                     <img src={Logo} height="70" alt="logo" />
                                     <div className="logo-text-footer"><span><b>D</b>aily</span><span><b>B</b>asket</span></div>
                                 </Link>
@@ -22,111 +22,56 @@ const Footer = () => {
                                         </li>
                                         <li>
                                             <a href="/" className="btn btn-outline-light">
-                                                <svg width="16" height="16"><use xlinkHref="#twitter"></use></svg>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="/" className="btn btn-outline-light">
-                                                <svg width="16" height="16"><use xlinkHref="#youtube"></use></svg>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="/" className="btn btn-outline-light">
                                                 <svg width="16" height="16"><use xlinkHref="#instagram"></use></svg>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="/" className="btn btn-outline-light">
-                                                <svg width="16" height="16"><use xlinkHref="#amazon"></use></svg>
                                             </a>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-md-2 col-sm-6">
+                        <div className="col-xl-2 col-lg-2 col-md-2 col-sm-6">
                             <div className="footer-menu">
-                                <h5 className="widget-title">Organic</h5>
+                                <h5 className="widget-title">Daily Basket</h5>
                                 <ul className="menu-list list-unstyled">
                                     <li className="menu-item">
                                         <a href="/" className="nav-link">About us</a>
                                     </li>
                                     <li className="menu-item">
-                                        <a href="/" className="nav-link">Conditions </a>
-                                    </li>
-                                    <li className="menu-item">
-                                        <a href="/" className="nav-link">Our Journals</a>
-                                    </li>
-                                    <li className="menu-item">
-                                        <a href="/" className="nav-link">Careers</a>
-                                    </li>
-                                    <li className="menu-item">
-                                        <a href="/" className="nav-link">Affiliate Programme</a>
-                                    </li>
-                                    <li className="menu-item">
-                                        <a href="/" className="nav-link">Ultras Press</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div className="col-md-2 col-sm-6">
-                            <div className="footer-menu">
-                                <h5 className="widget-title">Quick Links</h5>
-                                <ul className="menu-list list-unstyled">
-                                    <li className="menu-item">
-                                        <a href="/" className="nav-link">Offers</a>
-                                    </li>
-                                    <li className="menu-item">
-                                        <a href="/" className="nav-link">Discount Coupons</a>
-                                    </li>
-                                    <li className="menu-item">
-                                        <a href="/" className="nav-link">Stores</a>
-                                    </li>
-                                    <li className="menu-item">
-                                        <a href="/" className="nav-link">Track Order</a>
-                                    </li>
-                                    <li className="menu-item">
-                                        <a href="/" className="nav-link">Shop</a>
-                                    </li>
-                                    <li className="menu-item">
-                                        <a href="/" className="nav-link">Info</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div className="col-md-2 col-sm-6">
-                            <div className="footer-menu">
-                                <h5 className="widget-title">Customer Service</h5>
-                                <ul className="menu-list list-unstyled">
-                                    <li className="menu-item">
-                                        <a href="/" className="nav-link">FAQ</a>
-                                    </li>
-                                    <li className="menu-item">
-                                        <a href="/" className="nav-link">Contact</a>
-                                    </li>
-                                    <li className="menu-item">
                                         <a href="/" className="nav-link">Privacy Policy</a>
                                     </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div className="col-xl-2 col-lg-3 col-md-3 col-sm-6">
+                            <div className="footer-menu">
+                                <h5 className="widget-title">We Accept</h5>
+                                <ul className="we-accept-footer list-unstyled">
                                     <li className="menu-item">
-                                        <a href="/" className="nav-link">Returns & Refunds</a>
+                                        <img src={Visa} />
                                     </li>
                                     <li className="menu-item">
-                                        <a href="/" className="nav-link">Cookie Guidelines</a>
+                                        <img src={MasterCard} />
                                     </li>
                                     <li className="menu-item">
-                                        <a href="/" className="nav-link">Delivery Information</a>
+                                        <img src={Discovery} />
+                                    </li>
+                                    <li className="menu-item">
+                                        <img src={Amex} />
                                     </li>
                                 </ul>
                             </div>
                         </div>
-                        <div className="col-lg-3 col-md-6 col-sm-6">
+                        <div className="col-xl-5 col-lg-4 col-md-4 col-sm-6">
                             <div className="footer-menu">
-                                <h5 className="widget-title">Subscribe Us</h5>
-                                <p>Subscribe to our newsletter to get updates about our grand offers.</p>
-                                <form className="d-flex mt-3 gap-0" action="index.html">
-                                    <input className="form-control rounded-start rounded-0 bg-light" type="email" placeholder="Email Address" aria-label="Email Address" />
-                                    <button className="btn btn-dark rounded-end rounded-0" type="submit">Subscribe</button>
-                                </form>
+                                <h5 className="widget-title">Contact Us</h5>
+                                <ul className="menu-list list-unstyled">
+                                    <li className="menu-item">
+                                        <a href="mailto:dailybasket247@gmail.com" className="nav-link">dailybasket247@gmail.com</a>
+                                    </li>
+                                    <li className="menu-item">
+                                        <p className="nav-link">Address: 7 Langney Road, Eastbourne,BN21 3QA</p>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -136,7 +81,7 @@ const Footer = () => {
                 <div className="container-lg">
                     <div className="row">
                         <div className="copyright text-center">
-                            <p>© 2024 Organic. All rights reserved.</p>
+                            <p>© 2025 Daily Basket. All rights reserved.</p>
                         </div>
                     </div>
                 </div>

@@ -43,6 +43,11 @@ import Login from './login.webp';
 import ScheduleDelivery from './schedule-delivery.webp';
 import Orders from './orders.webp';
 
+import Visa from './visa.png';
+import MasterCard from './masterCard.png';
+import Discovery from './discovery.png';
+import Amex from './amex.png';
+
 export {
     Logo,
     Login,
@@ -53,5 +58,6 @@ export {
     BannerAd1, BannerAd2, BannerAd3,
     ProductLarge1, ProductLarge2, ProductLarge3, ProductLarge4, ProductLarge5,
     Reviewer1, Reviewer2,
-    ScheduleDelivery, Orders
+    ScheduleDelivery, Orders,
+    Visa, MasterCard, Discovery, Amex
 };

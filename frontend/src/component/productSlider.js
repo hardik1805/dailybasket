@@ -8,6 +8,36 @@ const ProductSlider = ({ title, data }) => {
         speed: 500,
         slidesToShow: 5,
         slidesToScroll: 2,
+        responsive: [
+            {
+                breakpoint: 1440,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 2,
+                }
+            },
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }
+        ]
     };
 
     return (<section key={title} id="featured-products" className="products-carousel">
@@ -24,7 +54,7 @@ const ProductSlider = ({ title, data }) => {
                     <div className="product-grid row">
                         <Slider {...productConfig}>
                             {data.map((item) => {
-                                return <div key={item.title} className="col"><ProductCard item={item} style={{ width: '286.4px', marginRight: '30px', flexShrink: 0 }} /></div>
+                                return <div key={item.title} className="col"><ProductCard item={item} style={{ width: 'auto', marginRight: '30px', flexShrink: 0 }} /></div>
                             })}
                         </Slider>
                     </div>
