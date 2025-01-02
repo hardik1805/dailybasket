@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const ProductCard = ({ item, style, isWishlist = false }) => {
     return <div key={item.name} className="product-item" style={style}>
         <figure>
-            <Link to={`/product?id=${item.id}`} title="Product Title">
+            <Link to={`/product?id=${item.id}`} title={item.name}>
                 <img src={item.image} alt="Product Thumbnail" className="tab-image" />
             </Link>
         </figure>

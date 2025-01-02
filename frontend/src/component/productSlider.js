@@ -53,9 +53,10 @@ const ProductSlider = ({ title, data }) => {
                 <div className="col-md-12">
                     <div className="product-grid row">
                         <Slider {...productConfig}>
-                            {data.map((item) => {
-                                return <div key={item.title} className="col"><ProductCard item={item} style={{ width: 'auto', marginRight: '30px', flexShrink: 0 }} /></div>
-                            })}
+                            {data.map((item) =>
+                                item.isFavourite &&
+                                <div key={item.title} className="col"><ProductCard item={item} style={{ width: 'auto', marginRight: '30px', flexShrink: 0 }} /></div>
+                            )}
                         </Slider>
                     </div>
                 </div>

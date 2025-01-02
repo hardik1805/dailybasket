@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import { BannerAd1, BannerAd2, BannerAd3 } from "../assets/images";
-import { products, promotionalBanner } from "../common/constant";
+import { product, promotionalBanner } from "../common/constant";
 import ProductCard from "../common/productCard";
 import CategorySlider from "../component/categorySlider";
 import HeroBanner from "../component/heroBanner";
@@ -28,8 +27,8 @@ const LandingPage = () => {
                     <div className="col-md-12">
                         <div
                             className="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5">
-                            {products.map((item) =>
-                                item.isBestSelling &&
+                            {product.map((item, i) =>
+                                item.isBestSelling && i <= 5 &&
                                 <div key={item.name} className="col">
                                     <ProductCard item={item} />
                                 </div>
@@ -64,7 +63,7 @@ const LandingPage = () => {
         </section>
 
 
-        <ProductSlider title={'Favourite'} data={products} />
+        <ProductSlider title={'Favourite'} data={product} />
 
 
         <section className="py-5">
