@@ -101,8 +101,20 @@ export function signIn(data, next) {
     }
 }
 
+export function getUserDetails(data, next) {
+    signUpService.getUserDetails(data).then(response => {
+        if (next) next(response)
+    })
+}
+
 export function updateUserDetails(data, next) {
     signUpService.updateUserDetails(data).then(response => {
+        if (next) next(response)
+    })
+}
+
+export function addProductToWishlist(data, next) {
+    signUpService.addProductToWishlist(data).then(response => {
         if (next) next(response)
     })
 }
