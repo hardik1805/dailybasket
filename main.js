@@ -1,23 +1,26 @@
 require('dotenv').config();
+
 const express = require('express');
 const passport = require('passport');
 const passportJWT = require('passport-jwt');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+
 const connectDB = require('./mongodb'); // Import the Mongoose connection
 const authRoutes = require('./routes/auth');
 const profileRoutes = require('./routes/profile');
+const orderRoutes = require('./routes/order');
 const User = require('./models/User')
 const app = express();
-const cors = require('cors');
-const bodyParser = require('body-parser');
 app.use(cors());
 const port = 8080;
+
 // Setup JWT strategy
 const JwtStrategy = passportJWT.Strategy;
 const ExtractJwt = passportJWT.ExtractJwt;
-
 passport.use(new JwtStrategy({
-    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // Extract token from Authorization header
-    secretOrKey: process.env.SECRETORKEY, // The secret key to validate the JWT
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    secretOrKey: process.env.SECRETORKEY,
 }, async (jwtPayload, done) => {
     try {
         if (jwtPayload) {
@@ -44,7 +47,6 @@ app.use(passport.initialize());
 
 connectDB();
 
-
 // Logger Middleware to log all API calls and responses
 app.use((req, res, next) => {
     console.log(`[Request] ${req.method} ${req.url}`);
@@ -55,6 +57,7 @@ app.use((req, res, next) => {
 // Routes
 app.use('/api/auth', authRoutes);// Auth routes (No token check here)
 app.use('/api/user', passport.authenticate('jwt', {session: false}), profileRoutes);
+app.use('/api/order',passport.authenticate('jwt', {session: false}), orderRoutes)
 
 
 // Error Handling Middleware
