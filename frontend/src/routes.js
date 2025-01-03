@@ -1,6 +1,6 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import Layout from "./common/layout";
-import { Cart, Checkout, EmailVerification, VerifyCode, ResetPassword, LandingPage, OrderConfirmation, ProductDetail, ProductListing, SignIn, SignUp } from "./container";
+import { Cart, Checkout, EmailVerification, VerifyCode, ResetPassword, LandingPage, OrderConfirmation, ProductDetail, ProductListing, BestSellingProductListing, SignIn, SignUp } from "./container";
 import Profile from "./container/profile/profile";
 
 const router = createBrowserRouter([
@@ -31,6 +31,10 @@ const router = createBrowserRouter([
     {
         path: "/category",
         element: <Layout><ProductListing /></Layout>
+    },
+    {
+        path: "/best-selling",
+        element: <Layout><BestSellingProductListing /></Layout>
     },
     {
         path: "/product",

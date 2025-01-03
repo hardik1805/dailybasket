@@ -17,7 +17,7 @@ const LandingPage = () => {
                         <div className="section-header d-flex flex-wrap justify-content-between my-4">
                             <h2 className="section-title">Best selling products</h2>
                             <div className="d-flex align-items-center">
-                                <Link to="/category" className="btn btn-primary rounded-1">View All</Link>
+                                <Link to="/best-selling" className="btn btn-primary rounded-1">View All</Link>
                             </div>
                         </div>
                     </div>

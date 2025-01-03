@@ -1,9 +1,21 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Login, Logo } from "../../assets/images";
 import { checkCookie, deleteAllCookies } from "../cookie";
+import { useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { generateCart } from "../../redux/slices/cartSlice";
+import { generateRandomCode } from "../generateCart";
 
 const Header = () => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const { cartId } = useSelector((state) => state.cart);
+
+    useMemo(() => {
+        if (!cartId?.length) {
+            dispatch(generateCart(generateRandomCode()))
+        }
+    }, [])
 
     const signOut = () => {
         deleteAllCookies();

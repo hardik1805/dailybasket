@@ -1,26 +1,19 @@
 import { useMemo } from "react"
-import { useLocation } from "react-router"
-import { category, product, products } from "../../common/constant"
+import { product } from "../../common/constant"
 import ProductCard from "../../common/productCard"
 import Breadcrumb from "../../component/breadcrumbs"
 
-const ProductListing = () => {
-    const location = useLocation();
-    const { search } = location
-    const catID = new URLSearchParams(search).get("id")
-
-    const categoryDetail = category.find(_ => _.id === Number(catID))
-
+const BestSellingProductListing = () => {
     const renderProduct = useMemo(() => {
-        return product.filter(_ => _.categoryId === Number(catID)).map((item) => {
+        return product.filter(_ => _.isBestSelling).map((item) => {
             return <div key={item.name} className="col">
                 <ProductCard item={item} />
             </div>
         })
-    }, [catID])
+    }, [])
 
     return <>
-        <Breadcrumb title={categoryDetail.name} isPath={true} />
+        <Breadcrumb title="Best Selling" isPath={true} />
         <div className="py-4">
             <div className="container-lg">
                 <div className="row g-5">
@@ -35,4 +28,4 @@ const ProductListing = () => {
     </>
 }
 
-export default ProductListing
+export default BestSellingProductListing

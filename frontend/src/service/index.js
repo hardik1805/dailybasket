@@ -1,5 +1,5 @@
 import axios from "axios";
-import {deleteAllCookies, getCookie} from "../common/cookie";
+import { deleteAllCookies, getCookie } from "../common/cookie";
 
 const api = axios.create();
 const statusCheck = {
@@ -50,5 +50,8 @@ export const signUpService = {
     sendVerifyEmail: (data) => api.post(baseUrl.auth + `verifyemail`, data, statusCheck).then(onSuccess, onError), // send verification code
     verifyCode: (data) => api.post(baseUrl.auth + `verifycode`, data, statusCheck).then(onSuccess, onError), // verify code
     resetPassword: (data) => api.post(baseUrl.auth + `resetpassword`, data, statusCheck).then(onSuccess, onError),
+
+    getUserDetails: (data) => api.post(baseUrl.user + `get`, data, statusCheck).then(onSuccess, onError),
     updateUserDetails: (data) => api.post(baseUrl.user + `update`, data, statusCheck).then(onSuccess, onError),
+    addProductToWishlist: (data) => api.post(baseUrl.user + `wishlist`, data, statusCheck).then(onSuccess, onError),
 }

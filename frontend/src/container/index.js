@@ -7,6 +7,7 @@ import ResetPassword from './authantication/resetPassword';
 import LandingPage from './landingPage';
 
 import ProductListing from './productListing/productlisting';
+import BestSellingProductListing from './productListing/bestSellingProductListing';
 import ProductDetail from './productDetails/productDetail';
 
 import Cart from './cart/cart';
@@ -22,6 +23,7 @@ export {
     VerifyCode,
     ResetPassword,
     ProductListing,
+    BestSellingProductListing,
     ProductDetail,
     Cart,
     Checkout,
