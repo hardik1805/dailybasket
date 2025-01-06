@@ -1,27 +1,40 @@
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { currencySymbol } from "../../../common/constant";
 
 const CartSummary = () => {
+    const { cartInfo } = useSelector((state) => state.cart);
+    const { productList } = useSelector((state) => state.product);
+
+    const getProductDetails = (pid) => {
+        return productList.find((_) => _.id === Number(pid))
+    }
+
+    const getPriceCalculation = (item) => {
+        const { unitPrice, discount } = getProductDetails(item.productId);
+        if (discount !== 0) {
+            return (Number(unitPrice) * (1 - discount / 100)).toFixed(2)
+        } else if (discount) {
+            return Number(unitPrice).toFixed(2)
+        } else {
+            return Number(unitPrice).toFixed(2)
+        }
+    }
+
+    const finalTotal = cartInfo.items.reduce((sum, row) => sum + Number(getPriceCalculation(row) * row.qty), 0)
+
     return <div className="cart-totals bg-grey">
         <h4 className="text-dark pb-4">Cart Total</h4>
         <div className="total-price pb-5">
             <table cellspacing="0" className="table text-uppercase">
                 <tbody>
-                    <tr className="subtotal pt-2 pb-2 border-top border-bottom">
-                        <th>Subtotal</th>
-                        <td data-title="Subtotal">
-                            <span className="price-amount amount text-dark ps-5">
-                                <bdi>
-                                    <span className="price-currency-symbol">$</span>370.00
-                                </bdi>
-                            </span>
-                        </td>
-                    </tr>
                     <tr className="order-total pt-2 pb-2 border-bottom">
                         <th>Total</th>
-                        <td data-title="Total">
+                        <td data-title="Total" style={{ textAlign: 'end' }}>
                             <span className="price-amount amount text-dark ps-5">
                                 <bdi>
-                                    <span className="price-currency-symbol">$</span>370.00</bdi>
+                                    <span className="price-currency-symbol">{currencySymbol}</span>{finalTotal.toFixed(2)}
+                                </bdi>
                             </span>
                         </td>
                     </tr>

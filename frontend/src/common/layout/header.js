@@ -3,13 +3,17 @@ import { Login, Logo } from "../../assets/images";
 import { checkCookie, deleteAllCookies } from "../cookie";
 import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { generateCart } from "../../redux/slices/cartSlice";
+import { generateCart, removeCart } from "../../redux/slices/cartSlice";
 import { generateRandomCode } from "../generateCart";
+import { removeUserInfo } from "../../redux/slices/userSlice";
+import MiniCart from "../../component/miniCart";
+import { toast } from 'react-toastify';
+import { category } from "../constant";
 
 const Header = () => {
-    const navigate = useNavigate()
     const dispatch = useDispatch()
-    const { cartId } = useSelector((state) => state.cart);
+    const navigate = useNavigate();
+    const { cartId, cartInfo } = useSelector((state) => state.cart);
 
     useMemo(() => {
         if (!cartId?.length) {
@@ -17,10 +21,13 @@ const Header = () => {
         }
     }, [])
 
-    const signOut = () => {
-        deleteAllCookies();
-        navigate('/')
-        window.location.reload(true)
+    const signOut = async () => {
+        await deleteAllCookies();
+        await dispatch(removeUserInfo())
+        if (cartInfo.uid) {
+            await dispatch(removeCart())
+        }
+        await window.location.reload(true)
     }
 
     return (
@@ -31,39 +38,8 @@ const Header = () => {
                 </div>
                 <div className="offcanvas-body">
                     <div className="order-md-last">
-                        <h4 className="d-flex justify-content-between align-items-center mb-3">
-                            <span className="text-primary">Your cart</span>
-                            <span className="badge bg-primary rounded-pill">3</span>
-                        </h4>
-                        <ul className="list-group mb-3">
-                            <li className="list-group-item d-flex justify-content-between lh-sm">
-                                <div>
-                                    <h6 className="my-0">Growers cider</h6>
-                                    <small className="text-body-secondary">Brief description</small>
-                                </div>
-                                <span className="text-body-secondary">$12</span>
-                            </li>
-                            <li className="list-group-item d-flex justify-content-between lh-sm">
-                                <div>
-                                    <h6 className="my-0">Fresh grapes</h6>
-                                    <small className="text-body-secondary">Brief description</small>
-                                </div>
-                                <span className="text-body-secondary">$8</span>
-                            </li>
-                            <li className="list-group-item d-flex justify-content-between lh-sm">
-                                <div>
-                                    <h6 className="my-0">Heinz tomato ketchup</h6>
-                                    <small className="text-body-secondary">Brief description</small>
-                                </div>
-                                <span className="text-body-secondary">$5</span>
-                            </li>
-                            <li className="list-group-item d-flex justify-content-between">
-                                <span>Total (USD)</span>
-                                <strong>$20</strong>
-                            </li>
-                        </ul>
-
-                        <button className="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
+                        <MiniCart />
+                        <button type="button" className="w-100 btn btn-primary btn-lg" onClick={() => navigate('/cart')} data-bs-dismiss="offcanvas" aria-label="Close">View Cart</button>
                     </div>
                 </div>
             </div>
@@ -75,160 +51,15 @@ const Header = () => {
                 </div>
                 <div className="offcanvas-body">
                     <ul className="navbar-nav justify-content-end menu-list list-unstyled d-flex gap-md-3 mb-0">
-                        <li className="nav-item border-dashed active">
-                            <Link to="/category" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
-                                <svg width="24" height="24" viewBox="0 0 24 24">
-                                    <use xlinkHref="#fruits" xlink></use>
-                                </svg>
-                                <span>Fruits and vegetables</span>
-                            </Link>
-                        </li>
-                        <li className="nav-item border-dashed">
-                            <Link to="/category" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
-                                <svg width="24" height="24" viewBox="0 0 24 24">
-                                    <use xlinkHref="#dairy"></use>
-                                </svg>
-                                <span>Dairy and Eggs</span>
-                            </Link>
-                        </li>
-                        <li className="nav-item border-dashed">
-                            <Link to="/category" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
-                                <svg width="24" height="24" viewBox="0 0 24 24">
-                                    <use xlinkHref="#meat"></use>
-                                </svg>
-                                <span>Meat and Poultry</span>
-                            </Link>
-                        </li>
-                        <li className="nav-item border-dashed">
-                            <Link to="/category" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
-                                <svg width="24" height="24" viewBox="0 0 24 24">
-                                    <use xlinkHref="#seafood"></use>
-                                </svg>
-                                <span>Seafood</span>
-                            </Link>
-                        </li>
-                        <li className="nav-item border-dashed">
-                            <Link to="/category" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
-                                <svg width="24" height="24" viewBox="0 0 24 24">
-                                    <use xlinkHref="#bakery"></use>
-                                </svg>
-                                <span>Bakery and Bread</span>
-                            </Link>
-                        </li>
-                        <li className="nav-item border-dashed">
-                            <Link to="/category" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
-                                <svg width="24" height="24" viewBox="0 0 24 24">
-                                    <use xlinkHref="#canned"></use>
-                                </svg>
-                                <span>Canned Goods</span>
-                            </Link>
-                        </li>
-                        <li className="nav-item border-dashed">
-                            <Link to="/category" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
-                                <svg width="24" height="24" viewBox="0 0 24 24">
-                                    <use xlinkHref="#frozen"></use>
-                                </svg>
-                                <span>Frozen Foods</span>
-                            </Link>
-                        </li>
-                        <li className="nav-item border-dashed">
-                            <Link to="/category" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
-                                <svg width="24" height="24" viewBox="0 0 24 24">
-                                    <use xlinkHref="#pasta"></use>
-                                </svg>
-                                <span>Pasta and Rice</span>
-                            </Link>
-                        </li>
-                        <li className="nav-item border-dashed">
-                            <Link to="/category" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
-                                <svg width="24" height="24" viewBox="0 0 24 24">
-                                    <use xlinkHref="#breakfast"></use>
-                                </svg>
-                                <span>Breakfast Foods</span>
-                            </Link>
-                        </li>
-                        <li className="nav-item border-dashed">
-                            <Link to="/category" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
-                                <svg width="24" height="24" viewBox="0 0 24 24">
-                                    <use xlinkHref="#snacks"></use>
-                                </svg>
-                                <span>Snacks and Chips</span>
-                            </Link>
-                        </li>
-                        <li className="nav-item border-dashed">
-                            <button
-                                className="btn btn-toggle dropdown-toggle position-relative w-100 d-flex justify-content-between align-items-center text-dark p-2"
-                                data-bs-toggle="collapse" data-bs-target="#beverages-collapse" aria-expanded="false">
-                                <div className="d-flex gap-3">
-                                    <svg width="24" height="24" viewBox="0 0 24 24">
-                                        <use xlinkHref="#beverages"></use>
-                                    </svg>
-                                    <span>Beverages</span>
-                                </div>
-                            </button>
-                            <div className="collapse" id="beverages-collapse">
-                                <ul className="btn-toggle-nav list-unstyled fw-normal ps-5 pb-1">
-                                    <li className="border-bottom py-2"><Link to="/category"
-                                        className="dropdown-item">Water</Link></li>
-                                    <li className="border-bottom py-2"><Link to="/category"
-                                        className="dropdown-item">Juice</Link></li>
-                                    <li className="border-bottom py-2"><Link to="/category"
-                                        className="dropdown-item">Soda</Link></li>
-                                    <li className="border-bottom py-2"><Link to="/category"
-                                        className="dropdown-item">Tea</Link></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li className="nav-item border-dashed">
-                            <Link to="/category" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
-                                <svg width="24" height="24" viewBox="0 0 24 24">
-                                    <use xlinkHref="#spices"></use>
-                                </svg>
-                                <span>Spices and Seasonings</span>
-                            </Link>
-                        </li>
-                        <li className="nav-item border-dashed">
-                            <Link to="/category" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
-                                <svg width="24" height="24" viewBox="0 0 24 24">
-                                    <use xlinkHref="#baby"></use>
-                                </svg>
-                                <span>Baby Food and Formula</span>
-                            </Link>
-                        </li>
-                        <li className="nav-item border-dashed">
-                            <Link to="/category" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
-                                <svg width="24" height="24" viewBox="0 0 24 24">
-                                    <use xlinkHref="#health"></use>
-                                </svg>
-                                <span>Health and Wellness</span>
-                            </Link>
-                        </li>
-                        <li className="nav-item border-dashed">
-                            <Link to="/category" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
-                                <svg width="24" height="24" viewBox="0 0 24 24">
-                                    <use xlinkHref="#household"></use>
-                                </svg>
-                                <span>Household Supplies</span>
-                            </Link>
-                        </li>
-                        <li className="nav-item border-dashed">
-                            <Link to="/category" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
-                                <svg width="24" height="24" viewBox="0 0 24 24">
-                                    <use xlinkHref="#personal"></use>
-                                </svg>
-                                <span>Personal Care</span>
-                            </Link>
-                        </li>
-                        <li className="nav-item border-dashed">
-                            <Link to="/category" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
-                                <svg width="24" height="24" viewBox="0 0 24 24">
-                                    <use xlinkHref="#pet"></use>
-                                </svg>
-                                <span>Pet Food and Supplies</span>
-                            </Link>
-                        </li>
+                        {category.map((item) => {
+                            return <li className="nav-item border-dashed active">
+                                <button type="button" onClick={() => navigate(`/category?id=${item.id}`)} data-bs-dismiss="offcanvas" aria-label="Close" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
+                                    <img src={item.image} className="rounded-circle" alt="Category Thumbnail" style={{ display: 'unset', width: '50px', height: '50px', objectFit: 'cover', objectPosition: 'center' }} />
+                                    <span>{item.name}</span>
+                                </button>
+                            </li>
+                        })}
                     </ul>
-
                 </div>
             </div>
 
@@ -268,12 +99,18 @@ const Header = () => {
                                         </ul> : null}
                                 </li>
                                 <li>
-                                    <Link to="" className="p-2 mx-1" data-bs-toggle="offcanvas"
-                                        data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
-                                        <svg width="24" height="24">
-                                            <use xlinkHref="#shopping-bag"></use>
-                                        </svg>
-                                    </Link>
+                                    {cartInfo?.items.length ?
+                                        <Link to="" className="p-2 mx-1" data-bs-toggle="offcanvas"
+                                            data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
+                                            <svg width="24" height="24">
+                                                <use xlinkHref="#shopping-bag"></use>
+                                            </svg>
+                                        </Link>
+                                        : <Link to="" className="p-2 mx-1" onClick={() => toast.success(`There are no items in your cart.`, { position: "top-right" })}>
+                                            <svg width="24" height="24">
+                                                <use xlinkHref="#shopping-bag"></use>
+                                            </svg>
+                                        </Link>}
                                 </li>
                             </ul>
                         </div>

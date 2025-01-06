@@ -1,11 +1,14 @@
 import { Link } from "react-router-dom";
-import { product, promotionalBanner } from "../common/constant";
+import { promotionalBanner } from "../common/constant";
 import ProductCard from "../common/productCard";
 import CategorySlider from "../component/categorySlider";
 import HeroBanner from "../component/heroBanner";
 import ProductSlider from "../component/productSlider";
+import { useSelector } from "react-redux";
 
 const LandingPage = () => {
+    const { productList } = useSelector((state) => state.product);
+    
     return <>
         <HeroBanner />
         <CategorySlider />
@@ -27,7 +30,7 @@ const LandingPage = () => {
                     <div className="col-md-12">
                         <div
                             className="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5">
-                            {product.map((item, i) =>
+                            {productList.map((item, i) =>
                                 item.isBestSelling && i <= 5 &&
                                 <div key={item.name} className="col">
                                     <ProductCard item={item} />
@@ -63,7 +66,7 @@ const LandingPage = () => {
         </section>
 
 
-        <ProductSlider title={'Favourite'} data={product} />
+        <ProductSlider title={'Favourite'} data={productList} />
 
 
         <section className="py-5">

@@ -4,7 +4,7 @@ import CartSummary from "./components/cartSummary";
 
 const Cart = () => {
     return <>
-        <Breadcrumb title="Cart" isPath={true}/>
+        <Breadcrumb title="Cart"/>
         <section className="py-5">
             <div className="container-lg">
                 <div className="row g-5">

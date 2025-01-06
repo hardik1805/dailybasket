@@ -23,8 +23,13 @@ const userSlice = createSlice({
         updateUserInfo: (state, action) => {
             state.userInfo = action.payload;
         },
+        removeUserInfo: (state, action) => {
+            state._id = null;
+            state.userInfo = null;
+            state.verificationEmail = null
+        },
     },
 });
 
-export const { loginSuccess, logout, setEmailForVerification, updateUserInfo } = userSlice.actions;
+export const { loginSuccess, logout, setEmailForVerification, updateUserInfo, removeUserInfo } = userSlice.actions;
 export default userSlice.reducer;

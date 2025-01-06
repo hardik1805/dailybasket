@@ -1,18 +1,22 @@
 import { useMemo } from "react"
 import { useLocation } from "react-router"
-import { category, product, products } from "../../common/constant"
+import { category } from "../../common/constant"
 import ProductCard from "../../common/productCard"
 import Breadcrumb from "../../component/breadcrumbs"
+import { useSelector } from "react-redux"
 
 const ProductListing = () => {
     const location = useLocation();
+    const { productList } = useSelector((state) => state.product);
     const { search } = location
     const catID = new URLSearchParams(search).get("id")
+    const prodDiscount = new URLSearchParams(search).get("discount")
 
     const categoryDetail = category.find(_ => _.id === Number(catID))
 
     const renderProduct = useMemo(() => {
-        return product.filter(_ => _.categoryId === Number(catID)).map((item) => {
+        const conditionalList = Number(catID) ? productList.filter(_ => _.categoryId === Number(catID)) : Number(prodDiscount) ? productList.filter(_ => _.discount === Number(prodDiscount)) : productList;
+        return conditionalList.map((item) => {
             return <div key={item.name} className="col">
                 <ProductCard item={item} />
             </div>
@@ -20,7 +24,7 @@ const ProductListing = () => {
     }, [catID])
 
     return <>
-        <Breadcrumb title={categoryDetail.name} isPath={true} />
+        <Breadcrumb title={categoryDetail ? categoryDetail.name : "Category"} isPath={true} />
         <div className="py-4">
             <div className="container-lg">
                 <div className="row g-5">

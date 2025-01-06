@@ -9,9 +9,9 @@ import { toast } from 'react-toastify';
 import { checkCookie } from '../../common/cookie';
 import { useNavigate } from 'react-router';
 import { loginSuccess, updateUserInfo } from '../../redux/slices/userSlice';
-import { product, products } from '../../common/constant';
 import ProductCard from '../../common/productCard';
 import { Link } from 'react-router-dom';
+import { currencySymbol } from '../../common/constant';
 
 
 
@@ -19,6 +19,7 @@ const Profile = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { _id, userInfo } = useSelector((state) => state.user);
+    const { productList } = useSelector((state) => state.product);
     const validator = useRef(new SimpleReactValidator());
     const [, forceUpdate] = useState();
     const [tab, setTab] = useState(1);
@@ -318,11 +319,11 @@ const Profile = () => {
                         <h5 className='p-3 border-dashed tab-description-heading'>Favorites List</h5>
                         <div className='card border-0 shadow-sm p-3'>
                             <div className="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-4">
-                                {(userInfo.wishList.length ? product.filter(_ => userInfo.wishList.includes(_.id)) : []).map((item) => <div key={item.name} className="wishlist-card col">
+                                {(userInfo.wishList.length ? productList.filter(_ => userInfo.wishList.includes(_.id)) : []).map((item) => <div key={item.name} className="wishlist-card col">
                                     <button type="button" className="btn-close" onClick={() => onHandleWishlist(item.id)} ></button>
                                     <ProductCard item={item} isWishlist={true} />
                                 </div>)}
-                                {(userInfo.wishList.length ? product.filter(_ => userInfo.wishList.includes(_.id)) : []).length === 0 && "Favorites list not added"}
+                                {(userInfo.wishList.length ? productList.filter(_ => userInfo.wishList.includes(_.id)) : []).length === 0 && "Favorites list not added"}
                             </div>
                         </div>
                     </div>}
@@ -331,7 +332,7 @@ const Profile = () => {
                         <div className='card border-0 shadow-sm p-3 gap-2'>
                             <section className='col order-product-list'>
                                 <ul className="list-group mb-3">
-                                    {products.map((item) => <li className="list-group-item lg-d-flex justify-content-between lh-sm">
+                                    {productList.map((item) => <li className="list-group-item lg-d-flex justify-content-between lh-sm">
                                         <div className='d-flex w-100 gap-3'>
                                             <div style={{ width: '100px', textAlign: 'center' }}>
                                                 <img src={item.image} alt="product name" className="img-fluid" style={{ height: "70px" }} />
@@ -340,7 +341,7 @@ const Profile = () => {
                                                 <div className='d-grid mb-2' style={{ lineHeight: '1.5' }}>
                                                     <b className="text-body-secondary mb-0">Order# 403-44320678-8545959</b>
                                                     <small className="text-body-secondary">Ordered 8 November</small>
-                                                    <small className="text-body-secondary">Order Total $870.00</small>
+                                                    <small className="text-body-secondary">Order Total {currencySymbol}870.00</small>
                                                 </div>
                                                 <div className="product-info">
                                                     <h6 className="pb-1">{item.name}</h6>

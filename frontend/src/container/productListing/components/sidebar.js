@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { currencySymbol } from "../../../common/constant";
 
 const Sidebar = () => {
     return <div className="sidebar">
@@ -57,19 +58,19 @@ const Sidebar = () => {
             <h5 className="widget-titlewidget-title">Filter By Price</h5>
             <ul className="product-tags sidebar-list list-unstyled">
                 <li className="tags-item">
-                    <Link to="" className="nav-link">Less than $10</Link>
+                    <Link to="" className="nav-link">Less than {currencySymbol}10</Link>
                 </li>
                 <li className="tags-item">
-                    <Link to="" className="nav-link">$10- $20</Link>
+                    <Link to="" className="nav-link">{currencySymbol}10- {currencySymbol}20</Link>
                 </li>
                 <li className="tags-item">
-                    <Link to="" className="nav-link">$20- $30</Link>
+                    <Link to="" className="nav-link">{currencySymbol}20- {currencySymbol}30</Link>
                 </li>
                 <li className="tags-item">
-                    <Link to="" className="nav-link">$30- $40</Link>
+                    <Link to="" className="nav-link">{currencySymbol}30- {currencySymbol}40</Link>
                 </li>
                 <li className="tags-item">
-                    <Link to="" className="nav-link">$40- $50</Link>
+                    <Link to="" className="nav-link">{currencySymbol}40- {currencySymbol}50</Link>
                 </li>
             </ul>
         </div>

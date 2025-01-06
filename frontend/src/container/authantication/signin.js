@@ -2,15 +2,17 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { LoginImg } from "../../assets/images";
 import Breadcrumb from "../../component/breadcrumbs";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signIn } from '../../redux/actions/profile';
 import { checkCookie, createCookie } from "../../common/cookie";
 import { setToken } from "../../service";
 import SimpleReactValidator from 'simple-react-validator';
 import { toast } from 'react-toastify';
+import { setCartToUser } from "../../redux/slices/cartSlice";
 
 const SignIn = () => {
     const dispatch = useDispatch();
+    const { cartId } = useSelector((state) => state.cart);
     const validator = useRef(new SimpleReactValidator());
     const [, forceUpdate] = useState();
     const [state, setState] = useState({ email: "", password: "" });
@@ -44,7 +46,12 @@ const SignIn = () => {
                         createCookie(token, 'dailyBasket');
                         setToken(token)
                         toast.success('Login successfully!', { position: "top-right" });
-                        navigate("/");
+                        if(cartId){
+                            dispatch(setCartToUser(userDetails._id))
+                            window.location.reload(true)
+                        } else {
+                            navigate("/");
+                        }
                     }
                 } else {
                     toast.error(res.data.message, { position: "top-right" });

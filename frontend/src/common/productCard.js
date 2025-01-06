@@ -4,10 +4,13 @@ import { addProductToWishlist, getUserDetails } from "../redux/actions/profile";
 import { checkCookie } from "./cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess } from "../redux/slices/userSlice";
+import { addToCart } from "../redux/slices/cartSlice";
 import { useMemo } from "react";
+import { currencySymbol } from "./constant";
 
 const ProductCard = ({ item, style, isWishlist = false }) => {
     const { _id, userInfo } = useSelector((state) => state.user);
+    const { cartId } = useSelector((state) => state.cart);
     const dispatch = useDispatch();
     const element = document.getElementById("preloader");
 
@@ -43,6 +46,15 @@ const ProductCard = ({ item, style, isWishlist = false }) => {
         }
     }
 
+    const onHandleCart = (productId) => {
+        toast.success(`Product has been added to cart.`, { position: "top-right" });
+        dispatch(addToCart({
+            uid: _id ? _id : "",
+            cartID: cartId,
+            items: { productId, qty: 1 }
+        }))
+    }
+
     const updateHeart = useMemo(() => {
         return userInfo?.wishList?.includes(item.id) ?
             <svg onClick={() => onHandleWishlist(item.id)} xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 130.88 100.39">
@@ -63,18 +75,17 @@ const ProductCard = ({ item, style, isWishlist = false }) => {
         <div className="d-flex flex-column text-center">
             <h3 className="fs-6 fw-normal" style={{ height: '40px' }}>{item.name}</h3>
             <div className="d-flex justify-content-center align-items-center gap-2">
-                {item.discount !== 0 && <span className="text-dark fw-semibold"> ${((item.unitPrice * (1 - item.discount / 100)).toFixed(2))}</span>}
-                {item.discount ? <del>${item.unitPrice}</del> : <span className="text-dark fw-semibold">${item.unitPrice}</span>}
+                {item.discount !== 0 && <span className="text-dark fw-semibold"> {currencySymbol}{((item.unitPrice * (1 - item.discount / 100)).toFixed(2))}</span>}
+                {item.discount ? <del>{currencySymbol}{item.unitPrice}</del> : <span className="text-dark fw-semibold">{currencySymbol}{item.unitPrice}</span>}
             </div>
         </div>
-        {/*<span className="badge border border-dark-subtle rounded-0 fw-normal px-1 fs-7 lh-1 text-body-tertiary">{item.discount}% OFF</span>*/}
         <div className="product-card-footer">
-            <Link to="/" className="btn btn-primary rounded-1 p-2 fs-7">
+            <span className="btn btn-primary rounded-1 p-2 fs-7 w-100" onClick={() => onHandleCart(item.id)}>
                 <svg width="18" height="18">
                     <use xlinkHref="#cart"></use>
                 </svg>
                 Add to Cart
-            </Link>
+            </span>
             {!isWishlist && updateHeart}
         </div>
     </div >

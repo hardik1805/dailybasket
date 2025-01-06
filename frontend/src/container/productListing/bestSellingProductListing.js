@@ -1,11 +1,13 @@
 import { useMemo } from "react"
-import { product } from "../../common/constant"
 import ProductCard from "../../common/productCard"
 import Breadcrumb from "../../component/breadcrumbs"
+import { useSelector } from "react-redux"
 
 const BestSellingProductListing = () => {
+    const { productList } = useSelector((state) => state.product);
+
     const renderProduct = useMemo(() => {
-        return product.filter(_ => _.isBestSelling).map((item) => {
+        return productList.filter(_ => _.isBestSelling).map((item) => {
             return <div key={item.name} className="col">
                 <ProductCard item={item} />
             </div>

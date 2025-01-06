@@ -58,7 +58,7 @@ const CategorySlider = () => {
                     <Slider {...categoryConfig}>
                         {category.map((item) => {
                             return <div key={item.name} className="nav-link text-center category-slider">
-                                <Link to={`/category?id=${item.id}`}><img src={item.image} className="rounded-circle" alt="Category Thumbnail" style={{ display: 'unset' }} /></Link>
+                                <Link to={`/category?id=${item.id}`}><img src={item.image} className="rounded-circle" alt="Category Thumbnail" style={{ display: 'unset', width: '160px', height: '160px', objectFit: 'cover', objectPosition: 'center' }} /></Link>
                                 <h4 className="fs-6 mt-3 fw-normal category-title">{item.name}</h4>
                             </div>
                         })}

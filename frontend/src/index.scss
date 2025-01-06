@@ -441,6 +441,14 @@ h6 {
   line-height: 1.5;
 }
 
+.stock-label {
+  width: fit-content;
+  padding: 0 5px;
+  background: #212529;
+  color: white !important;
+  border-radius: 5px;
+}
+
 @keyframes animation {
 
   0%,
