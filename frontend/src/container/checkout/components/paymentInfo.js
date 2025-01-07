@@ -1,57 +1,57 @@
-const PaymentInfo = () => {
-    return <>
-        <div className="my-3">
-            <div className="form-check">
-                <input id="credit" name="paymentMethod" type="radio" className="form-check-input" required="" />
-                <label className="form-check-label" for="credit">Credit card</label>
-            </div>
-            <div className="form-check">
-                <input id="debit" name="paymentMethod" type="radio" className="form-check-input" required="" />
-                <label className="form-check-label" for="debit">Debit card</label>
-            </div>
-            <div className="form-check">
-                <input id="paypal" name="paymentMethod" type="radio" className="form-check-input" required="" />
-                <label className="form-check-label" for="paypal">PayPal</label>
+const PaymentInfo = ({ state, onHandleChange, validator, updateDetails }) => {
+
+    const years = Array.from(new Array(10), (val, index) => (index + 25));
+    return <section>
+        <h5 className='p-3 border-dashed tab-description-heading'>Payment Information</h5>
+        <div className='card border-0 shadow-sm p-3 my-2'>
+            <form id="form" className="form-group flex-wrap row">
+                <div className="col-lg-4 pb-3">
+                    <label>Card Holder Name</label>
+                    <input type="text" name="cardHolder" className="form-control" value={state.paymentDetails.cardHolder} onChange={onHandleChange} />
+                    <span className="error-message">{validator.current.message('Card Holder Name', state.paymentDetails.cardHolder, 'alpha_space')}</span>
+                </div>
+                <div className="col-lg-4 pb-3">
+                    <label>Card Number</label>
+                    <input type="text" name="cardNumber" className="form-control" value={state.paymentDetails.cardNumber} onChange={onHandleChange} />
+                    <span className="error-message">{validator.current.message('Card Number', state.paymentDetails.cardNumber, 'card_num')}</span>
+                </div>
+                <div className="col-lg-4 pb-3 row">
+                    <label>Expire Date</label>
+                    <div className='d-flex gap-2'>
+                        <select name='expireMM' className='form-select' value={state.expireDate.expireMM} onChange={onHandleChange}>
+                            <option value=''>Month</option>
+                            <option value='01'>January</option>
+                            <option value='02'>February</option>
+                            <option value='03'>March</option>
+                            <option value='04'>April</option>
+                            <option value='05'>May</option>
+                            <option value='06'>June</option>
+                            <option value='07'>July</option>
+                            <option value='08'>August</option>
+                            <option value='09'>September</option>
+                            <option value='10'>October</option>
+                            <option value='11'>November</option>
+                            <option value='12'>December</option>
+                        </select>
+                        <select name='expireYY' className='form-select' value={state.expireDate.expireYY} onChange={onHandleChange}>
+                            <option value=''>Year</option>
+                            {years.map((y) => {
+                                return <option value={y}>20{y}</option>
+                            })}
+                        </select>
+                    </div>
+                </div>
+                <div className="col-lg-4 pb-3">
+                    <label>CVV</label>
+                    <input type="text" name="cvv" className="form-control" value={state.paymentDetails.cvv} onChange={onHandleChange} />
+                    <span className="error-message">{validator.current.message('CVV', state.paymentDetails.cvv, 'min:3|max:4')}</span>
+                </div>
+            </form>
+            <div className='text-center'>
+                <button type='button' className="btn btn-primary text-uppercase" style={{ width: 'fit-content' }} onClick={updateDetails}>Update Info</button>
             </div>
         </div>
-
-        <div className="row gy-3">
-            <div className="col-md-6">
-                <label for="cc-name" className="form-label">Name on card</label>
-                <input type="text" className="form-control" id="cc-name" placeholder="" required="" />
-                <small className="text-body-secondary">Full name as displayed on card</small>
-                <div className="invalid-feedback">
-                    Name on card is required
-                </div>
-                <div data-lastpass-icon-root="" style={{ position: 'relative !important', height: '0px !important', width: '0px !important', float: 'left !important' }}></div></div>
-
-            <div className="col-md-6">
-                <label for="cc-number" className="form-label">Credit card number</label>
-                <input type="text" className="form-control" id="cc-number" placeholder="" required="" />
-                <div className="invalid-feedback">
-                    Credit card number is required
-                </div>
-            </div>
-
-            <div className="col-md-3">
-                <label for="cc-expiration" className="form-label">Expiration</label>
-                <input type="text" className="form-control" id="cc-expiration" placeholder="" required="" />
-                <div className="invalid-feedback">
-                    Expiration date required
-                </div>
-            </div>
-
-            <div className="col-md-3">
-                <label for="cc-cvv" className="form-label">CVV</label>
-                <input type="text" className="form-control" id="cc-cvv" placeholder="" required="" />
-                <div className="invalid-feedback">
-                    Security code required
-                </div>
-            </div>
-        </div>
-
-        <hr className="my-4" />
-    </>
+    </section>
 }
 
 export default PaymentInfo

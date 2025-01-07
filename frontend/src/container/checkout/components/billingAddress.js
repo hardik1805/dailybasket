@@ -1,99 +1,45 @@
-const BillingAddress = () => {
-    return <>
-        <div className="row g-3">
-            <div className="col-sm-6">
-                <label for="firstName" className="form-label">First name</label>
-                <input type="text" className="form-control" id="firstName" placeholder="" value="" required="" />
-                <div className="invalid-feedback">
-                    Valid first name is required.
+import PostcodeLookupComponent from "../../../component/postcodeLookup"
+
+const BillingAddress = ({ state, onHandleChange, validator, setAddress }) => {
+
+    return <section>
+        <h5 className='p-3 border-dashed tab-description-heading'>Billing Information</h5>
+        <div className='card border-0 shadow-sm p-3 my-2'>
+            <form id="form" className="form-group flex-wrap row">
+                <div className="col-lg-4 pb-3">
+                    <label>First Name</label>
+                    <input type="text" name="firstName" className="form-control" value={state.firstName} onChange={onHandleChange} />
                 </div>
-                <div data-lastpass-icon-root="" style={{ position: 'relative !important', height: '0px !important', width: '0px !important', float: 'left !important' }}></div></div>
-
-            <div className="col-sm-6">
-                <label for="lastName" className="form-label">Last name</label>
-                <input type="text" className="form-control" id="lastName" placeholder="" value="" required="" />
-                <div className="invalid-feedback">
-                    Valid last name is required.
+                <div className="col-lg-4 pb-3">
+                    <label>Last Name</label>
+                    <input type="text" name="lastName" className="form-control" value={state.lastName} onChange={onHandleChange} />
                 </div>
-            </div>
-
-            <div className="col-12">
-                <label for="username" className="form-label">Username</label>
-                <div className="input-group has-validation">
-                    <span className="input-group-text">@</span>
-                    <input type="text" className="form-control" id="username" placeholder="Username" required="" />
-                    <div className="invalid-feedback">
-                        Your username is required.
-                    </div>
-                    <div data-lastpass-icon-root="" style={{ position: 'relative !important', height: '0px !important', width: '0px !important', float: 'left !important' }}></div></div>
-            </div>
-
-            <div className="col-12">
-                <label for="email" className="form-label">Email <span className="text-body-secondary">(Optional)</span></label>
-                <input type="email" className="form-control" id="email" placeholder="you@example.com" />
-                <div className="invalid-feedback">
-                    Please enter a valid email address for shipping updates.
+                <div className="col-lg-4 pb-3">
+                    <label>Email Address</label>
+                    <input type="email" name="email" className="form-control" value={state.email} readOnly />
                 </div>
-            </div>
-
-            <div className="col-12">
-                <label for="address" className="form-label">Address</label>
-                <input type="text" className="form-control" id="address" placeholder="1234 Main St" required="" />
-                <div className="invalid-feedback">
-                    Please enter your shipping address.
+                <div className="col-lg-4 pb-3">
+                    <label>Phone Number</label>
+                    <input type="text" name="phone" className="form-control" value={state.phone} onChange={onHandleChange} />
+                    <span className="error-message">{validator.current.message('Phone Number', state.phone, 'required|phone')}</span>
                 </div>
-            </div>
-
-            <div className="col-12">
-                <label for="address2" className="form-label">Address 2 <span className="text-body-secondary">(Optional)</span></label>
-                <input type="text" className="form-control" id="address2" placeholder="Apartment or suite" />
-            </div>
-
-            <div className="col-md-5">
-                <label for="country" className="form-label">Country</label>
-                <select className="form-select" id="country" required="">
-                    <option value="">Choose...</option>
-                    <option>United States</option>
-                </select>
-                <div className="invalid-feedback">
-                    Please select a valid country.
+            </form>
+            <form id="form" className="form-group flex-wrap row">
+                <div className="col-lg-4 pb-3 find-address-section">
+                    <label>Find My Address</label>
+                    <PostcodeLookupComponent onAddressSelected={(address) => setAddress(address)} />
                 </div>
-            </div>
-
-            <div className="col-md-4">
-                <label for="state" className="form-label">State</label>
-                <select className="form-select" id="state" required="">
-                    <option value="">Choose...</option>
-                    <option>California</option>
-                </select>
-                <div className="invalid-feedback">
-                    Please provide a valid state.
+                <div className="col-lg-4 pb-3">
+                    <label>Address</label>
+                    <input type="text" name="address" className="form-control" value={state.address} readOnly />
                 </div>
-            </div>
-
-            <div className="col-md-3">
-                <label for="zip" className="form-label">Zip</label>
-                <input type="text" className="form-control" id="zip" placeholder="" required="" />
-                <div className="invalid-feedback">
-                    Zip code required.
+                <div className="col-lg-4 pb-3">
+                    <label>Postcode</label>
+                    <input id="postcode" type="text" name="postcode" className="form-control" value={state.postcode} readOnly />
                 </div>
-            </div>
+            </form>
         </div>
-
-        <hr className="my-4" />
-
-        <div className="form-check">
-            <input type="checkbox" className="form-check-input" id="same-address" />
-            <label className="form-check-label" for="same-address">Shipping address is the same as my billing address</label>
-        </div>
-
-        <div className="form-check">
-            <input type="checkbox" className="form-check-input" id="save-info" />
-            <label className="form-check-label" for="save-info">Save this information for next time</label>
-        </div>
-
-        <hr className="my-4" />
-    </>
+    </section>
 }
 
 export default BillingAddress

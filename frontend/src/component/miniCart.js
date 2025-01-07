@@ -2,6 +2,13 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { currencySymbol } from "../common/constant";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+
+const initialOptions = {
+    "client-id": "Ae16b5yUQcr7V3KxfSGqC4uibP3KdSdASVKGNOqtnV3k424wQ2i4_TOb5M9xYRIRXRpkibuuxAzKIVp1",
+    currency: "GBP",
+    intent: "capture",
+};
 
 const MiniCart = ({ isTotal = false }) => {
     const navigate = useNavigate();
@@ -24,6 +31,28 @@ const MiniCart = ({ isTotal = false }) => {
     }
 
     const finalTotal = cartInfo.items.reduce((sum, row) => sum + Number(getPriceCalculation(row) * row.qty), 0)
+
+    const onCreateOrder = (data, actions) => {
+        console.log("data:-", data, actions);
+        return actions.order.create({
+            purchase_units: [
+                {
+                    amount: {
+                        value: finalTotal.toFixed(2),
+                    },
+                },
+            ],
+        });
+    }
+
+    const onApproveOrder = (data, actions) => {
+        console.log("data:-", data, actions);
+        
+        return actions.order.capture().then((details) => {
+            const name = details.payer.name.given_name;
+            alert(`Transaction completed by ${name}`);
+        });
+    }
 
     return <>
         <h4 className="d-flex justify-content-between align-items-center" style={{ padding: "0px 15px" }}>
@@ -61,6 +90,15 @@ const MiniCart = ({ isTotal = false }) => {
                 </li>
             </>}
         </ul>
+        {isTotal && <>
+            <PayPalScriptProvider options={initialOptions}>
+                <PayPalButtons
+                    style={{ layout: "horizontal" }}
+                    createOrder={(data, actions) => onCreateOrder(data, actions)}
+                    onApprove={(data, actions) => onApproveOrder(data, actions)}
+                />
+            </PayPalScriptProvider>
+        </>}
     </>
 }
 

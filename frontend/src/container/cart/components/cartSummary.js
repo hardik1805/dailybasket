@@ -1,8 +1,11 @@
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 import { currencySymbol } from "../../../common/constant";
+import { checkCookie } from "../../../common/cookie";
 
 const CartSummary = () => {
+    const navigate = useNavigate();
     const { cartInfo } = useSelector((state) => state.cart);
     const { productList } = useSelector((state) => state.product);
 
@@ -22,6 +25,14 @@ const CartSummary = () => {
     }
 
     const finalTotal = cartInfo.items.reduce((sum, row) => sum + Number(getPriceCalculation(row) * row.qty), 0)
+
+    const onHandleCheckout = () => {
+        if(!checkCookie('dailyBasket')){
+            toast.success('Please sign in to your Account to process checkout.', { position: "top-right" })
+        } else {
+            navigate('/checkout')
+        }
+    }
 
     return <div className="cart-totals bg-grey">
         <h4 className="text-dark pb-4">Cart Total</h4>
@@ -46,7 +57,7 @@ const CartSummary = () => {
                 <Link to="/category" className="btn btn-dark py-3 px-3 text-uppercase btn-rounded-none w-100">Continue Shopping</Link>
             </div>
             <div className="col-md-6">
-                <Link to="/checkout" className="btn btn-dark py-3 px-3 text-uppercase btn-rounded-none w-100">Process to Checkout</Link>
+                <button type="button" onClick={onHandleCheckout} className="btn btn-dark py-3 px-3 text-uppercase btn-rounded-none w-100">Process to Checkout</button>
             </div>
         </div>
     </div>

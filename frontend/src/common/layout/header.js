@@ -46,7 +46,7 @@ const Header = () => {
 
             <div className="offcanvas offcanvas-start" tabIndex="-1" id="offcanvasNavbar">
                 <div className="offcanvas-header justify-content-between">
-                    <h4 className="fw-normal text-uppercase fs-6 mb-0">Category</h4>
+                    <h4 className="fw-normal text-uppercase fs-6 mb-0">Menu</h4>
                     <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div className="offcanvas-body">
