@@ -38,7 +38,7 @@ router.post('/create', async (req, res) => {
         };
 
         // Delivery date logic (e.g., next day delivery by default)
-        const deliveryDateValue = new Date(deliveryDate) || new Date(Date.now() + 24 * 60 * 60 * 1000); // Default to tomorrow
+        const deliveryDateValue = new Date(Date.now() + 48 * 60 * 60 * 1000); // Default to tomorrow
 
         // Create a new order object
         const newOrder = new Order({
