@@ -14,17 +14,6 @@ const CartItems = () => {
         return productList.find((_) => _.id === Number(pid))
     }
 
-    const getPriceCalculation = (item) => {
-        const { unitPrice, discount } = getProductDetails(item.productId);
-        if (discount !== 0) {
-            return (Number(unitPrice) * (1 - discount / 100)).toFixed(2)
-        } else if (discount) {
-            return Number(unitPrice).toFixed(2)
-        } else {
-            return Number(unitPrice).toFixed(2)
-        }
-    }
-
     const changeItemQty = (qty, pid) => {
         const { name, stock } = getProductDetails(pid)
         if (qty > stock) {
@@ -47,8 +36,8 @@ const CartItems = () => {
             </thead>
             <tbody style={{ verticalAlign: 'baseline' }}>
                 {cartInfo.items.map((item) => {
-                    const { name, image } = getProductDetails(item.productId)
-                    return <tr key={item.productId}>
+                    const { name, image } = getProductDetails(item.product_id)
+                    return <tr key={item.product_id}>
                         <td itemScope="row" className="py-4">
                             <div className="cart-info d-flex flex-wrap align-items-center mb-4">
                                 <div className="col-lg-3">
@@ -59,25 +48,25 @@ const CartItems = () => {
                                 <div className="col-lg-9">
                                     <div className="card-detail ps-3">
                                         <h5 className="card-title">
-                                            <Link to={`/product?id=${item.productId}`} className="text-decoration-none">{name}</Link>
+                                            <Link to={`/product?id=${item.product_id}`} className="text-decoration-none">{name}</Link>
                                         </h5>
                                     </div>
                                 </div>
                             </div>
                         </td>
                         <td className="py-4">
-                            {currencySymbol}{getPriceCalculation(item)}
+                            {currencySymbol}{item.price}
                         </td>
                         <td className="py-4">
-                            <QuentityStepper qty={Number(item.qty)} setQty={(qty) => changeItemQty(qty, item.productId)} productDetail={getProductDetails(item.productId)} />
+                            <QuentityStepper qty={Number(item.qty)} setQty={(qty) => changeItemQty(qty, item.product_id)} productDetail={getProductDetails(item.product_id)} />
                         </td>
                         <td className="py-4">
                             <div className="total-price">
-                                <span className="money text-dark">{currencySymbol}{(getPriceCalculation(item) * item.qty).toFixed(2)}</span>
+                                <span className="money text-dark">{currencySymbol}{(item.price * item.qty).toFixed(2)}</span>
                             </div>
                         </td>
                         <td className="py-4">
-                            <div className="cart-remove" onClick={() => dispatch(removeItem(item.productId))}>
+                            <div className="cart-remove" onClick={() => dispatch(removeItem(item.product_id))}>
                                 <Link to="">
                                     <svg width="24" height="24">
                                         <use xlinkHref="#trash"></use>

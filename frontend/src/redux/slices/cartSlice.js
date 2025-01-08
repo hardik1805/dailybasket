@@ -7,6 +7,7 @@ const initialState = {
         cartID: "",
         items: []
     },
+    orderDetails: "",
 };
 
 const cartSlice = createSlice({
@@ -29,9 +30,9 @@ const cartSlice = createSlice({
             cloneCart.uid = uid;
             cloneCart.cartID = cartID;
             if (cloneCart.items.length) {
-                if (cloneCart.items.some(_ => _.productId === items.productId)) {
+                if (cloneCart.items.some(_ => _.product_id === items.product_id)) {
                     cloneCart.items = cloneCart.items.map((item) => {
-                        if (item.productId === items.productId) {
+                        if (item.product_id === items.product_id) {
                             Object.assign(item, { qty: Number(item.qty) + Number(items.qty) })
                             return item
                         } else {
@@ -59,7 +60,7 @@ const cartSlice = createSlice({
             let existingCart = JSON.parse(JSON.parse(localStorage.getItem('persist:root')).cart)
             let cloneCart = { ...existingCart.cartInfo };
             cloneCart.items = cloneCart.items.map((item) => {
-                if (item.productId === pid) {
+                if (item.product_id === pid) {
                     Object.assign(item, { qty: Number(qty) })
                     return item
                 } else {
@@ -71,11 +72,25 @@ const cartSlice = createSlice({
         removeItem: (state, action) => {
             let existingCart = JSON.parse(JSON.parse(localStorage.getItem('persist:root')).cart)
             let cloneCart = { ...existingCart.cartInfo };
-            cloneCart.items = cloneCart.items.filter((item) => item.productId !== action.payload)
+            cloneCart.items = cloneCart.items.filter((item) => item.product_id !== action.payload)
             state.cartInfo = cloneCart;
+        },
+        setOrderDetails: (state, action) => {
+            state.orderDetails = action.payload;
+        },
+        removeOrderDetails: (state, action) => {
+            state.orderDetails = "";
+        },
+        afterOrderCartRemove: (state, action) => {
+            state.cartId = null;
+            state.cartInfo = {
+                ...state.cartInfo,
+                cartID: "",
+                items: []
+            }
         },
     },
 });
 
-export const { generateCart, addToCart, setCartToUser, removeCart, updateItemQty,removeItem } = cartSlice.actions;
+export const { generateCart, addToCart, setCartToUser, removeCart, updateItemQty, removeItem, setOrderDetails, removeOrderDetails, afterOrderCartRemove } = cartSlice.actions;
 export default cartSlice.reducer;

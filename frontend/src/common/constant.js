@@ -5731,3 +5731,24 @@ export const ageVerificationText = "Yes, I confirm that I am 21 years of age or 
 export const checkValidStock = (stock, existingQty, actualQty) => {
     return Number(stock) >= Number((existingQty > 0 ? actualQty + existingQty : actualQty))
 }
+
+export const getPriceCalculation = (item) => {
+    const { unitPrice, discount } = item;
+    if (discount !== 0) {
+        return (Number(unitPrice) * (1 - discount / 100)).toFixed(2)
+    } else if (discount) {
+        return Number(unitPrice).toFixed(2)
+    } else {
+        return Number(unitPrice).toFixed(2)
+    }
+}
+
+export const getProductDetail = (item) => {
+    return product.find(_ => _.id === Number(item.product_id))
+}
+
+export const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const options = { day: '2-digit', month: 'long', year: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
+}

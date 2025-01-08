@@ -3,7 +3,7 @@ import { Login, Logo } from "../../assets/images";
 import { checkCookie, deleteAllCookies } from "../cookie";
 import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { generateCart, removeCart } from "../../redux/slices/cartSlice";
+import { generateCart, removeCart, removeOrderDetails } from "../../redux/slices/cartSlice";
 import { generateRandomCode } from "../generateCart";
 import { removeUserInfo } from "../../redux/slices/userSlice";
 import MiniCart from "../../component/miniCart";
@@ -24,6 +24,7 @@ const Header = () => {
     const signOut = async () => {
         await deleteAllCookies();
         await dispatch(removeUserInfo())
+        await dispatch(removeOrderDetails())
         if (cartInfo.uid) {
             await dispatch(removeCart())
         }

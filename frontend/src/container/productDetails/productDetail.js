@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { toast } from 'react-toastify';
 import Breadcrumb from "./components/breadcrumbs";
-import { ageVerificationText, category, checkValidStock, currencySymbol } from "../../common/constant";
+import { ageVerificationText, category, checkValidStock, currencySymbol, getPriceCalculation } from "../../common/constant";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../redux/slices/cartSlice";
 import QuentityStepper from "../../component/quentityStepper";
@@ -18,9 +18,9 @@ const ProductDetail = () => {
 
     const productDetail = productList.find(_ => _.id === Number(prodID))
     const categoryDetail = category.find(_ => _.id === Number(productDetail.categoryId))
-    const existInCart = cartInfo.items.find(_ => _.productId === Number(prodID))
-    const ageValidationCategory = category.some(_ => _.id === 2 || _.id === 3);
-
+    const existInCart = cartInfo.items.find(_ => _.product_id === Number(prodID))
+    const ageValidationCategory = categoryDetail.id === 2 || categoryDetail.id === 3;
+    
     const [qty, setQty] = useState(1);
 
     const onHandleCart = () => {
@@ -34,7 +34,7 @@ const ProductDetail = () => {
         dispatch(addToCart({
             uid: _id ? _id : "",
             cartID: cartId,
-            items: { productId: productDetail.id, qty }
+            items: { product_id: productDetail.id, qty, price: Number(getPriceCalculation(productDetail)) }
         }))
     }
 
@@ -48,9 +48,7 @@ const ProductDetail = () => {
                 <label for="age" style={{ cursor: 'pointer' }}>{ageVerificationText}</label>
             </div>
         </div>
-    ) : (
-        ''
-    );
+    ) : null;
 
     return <section id="selling-product" className="single-product mt-0 mt-md-5">
         <div className="container-lg">

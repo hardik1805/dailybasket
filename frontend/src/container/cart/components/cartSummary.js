@@ -7,27 +7,10 @@ import { checkCookie } from "../../../common/cookie";
 const CartSummary = () => {
     const navigate = useNavigate();
     const { cartInfo } = useSelector((state) => state.cart);
-    const { productList } = useSelector((state) => state.product);
-
-    const getProductDetails = (pid) => {
-        return productList.find((_) => _.id === Number(pid))
-    }
-
-    const getPriceCalculation = (item) => {
-        const { unitPrice, discount } = getProductDetails(item.productId);
-        if (discount !== 0) {
-            return (Number(unitPrice) * (1 - discount / 100)).toFixed(2)
-        } else if (discount) {
-            return Number(unitPrice).toFixed(2)
-        } else {
-            return Number(unitPrice).toFixed(2)
-        }
-    }
-
-    const finalTotal = cartInfo.items.reduce((sum, row) => sum + Number(getPriceCalculation(row) * row.qty), 0)
+    const finalTotal = cartInfo.items.reduce((sum, row) => sum + Number(row.price * row.qty), 0)
 
     const onHandleCheckout = () => {
-        if(!checkCookie('dailyBasket')){
+        if (!checkCookie('dailyBasket')) {
             toast.success('Please sign in to your Account to process checkout.', { position: "top-right" })
         } else {
             navigate('/checkout')
@@ -57,7 +40,7 @@ const CartSummary = () => {
                 <Link to="/category" className="btn btn-dark py-3 px-3 text-uppercase btn-rounded-none w-100">Continue Shopping</Link>
             </div>
             <div className="col-md-6">
-                <button type="button" onClick={onHandleCheckout} className="btn btn-dark py-3 px-3 text-uppercase btn-rounded-none w-100">Process to Checkout</button>
+                <button type="button" onClick={onHandleCheckout} className="btn btn-dark py-3 px-3 text-uppercase btn-rounded-none w-100" disabled={!cartInfo.items.length}>Process to Checkout</button>
             </div>
         </div>
     </div>

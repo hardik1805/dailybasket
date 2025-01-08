@@ -1,21 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import SimpleReactValidator from "simple-react-validator";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from 'react-toastify';
-import Breadcrumb from "../../component/breadcrumbs";
-import BillingAddress from "./components/billingAddress";
-import MiniCart from "../../component/miniCart";
-import { updateUserDetails } from "../../redux/actions/profile";
-import { updateUserInfo } from "../../redux/slices/userSlice";
-import { checkCookie } from "../../common/cookie";
-import { useNavigate } from "react-router";
+import { updateUserDetails } from "../../../redux/actions/profile";
+import SimpleReactValidator from "simple-react-validator";
+import { updateUserInfo } from "../../../redux/slices/userSlice";
+import PostcodeLookupComponent from '../../../component/postcodeLookup';
 
-const Checkout = () => {
+const MyProfile = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const validator = useRef(new SimpleReactValidator());
     const { userInfo } = useSelector((state) => state.user);
-    const { cartInfo } = useSelector((state) => state.cart);
+    const validator = useRef(new SimpleReactValidator());
     const [, forceUpdate] = useState();
     const [address, setAddress] = useState({
         line_1: "",
@@ -40,14 +34,9 @@ const Checkout = () => {
         expireDate: {
             expireMM: "",
             expireYY: ""
-        },
-        scheduleDelivery: { deliver: false, often: 0, interval: 0 }
+        }
     });
     const element = document.getElementById("preloader");
-
-    useEffect(() => {
-        if (!checkCookie('dailyBasket') || !cartInfo.items.length) navigate('/')
-    }, [])
 
     useEffect(() => {
         if (userInfo) {
@@ -92,16 +81,8 @@ const Checkout = () => {
                             ...prevState.expireDate,
                             [name]: value
                         }
-                    } : name === "deliver" ||
-                        name === "often" ||
-                        name === "interval"
-                        ? {
-                            scheduleDelivery: {
-                                ...prevState.scheduleDelivery,
-                                [name]: name === "deliver" ? Boolean(!state.scheduleDelivery.deliver) : Number(value) < 0 ? 1 : Number(value) >= 10 ? 10 : Number(value)
-                            }
-                        }
-                        : { [name]: value }),
+                    }
+                    : { [name]: value }),
         }));
     }
 
@@ -130,21 +111,54 @@ const Checkout = () => {
         }
     }
 
-    return <>
-        <Breadcrumb title="Checkout" />
-        <section className="shopify-cart checkout-wrap py-5">
-            <div className="container-lg">
-                <div className="row g-5">
-                    <div className="col-md-5 col-lg-4 order-md-last">
-                        <MiniCart isTotal={true} scheduleDelivery={state.scheduleDelivery} phoneNumber={state.phone} address={state.address}/>
+    return <div className="col-md-8 col-lg-9 col-xl-10 col-xxl-10">
+        <section>
+            <h5 className='p-3 border-dashed tab-description-heading'>Peronal Information</h5>
+            <div className='card border-0 shadow-sm p-3 my-2'>
+                <form id="form" className="form-group flex-wrap row">
+                    <div className="col-lg-4 pb-3">
+                        <label>First Name</label>
+                        <input type="text" name="firstName" className="form-control" value={state.firstName} onChange={onHandleChange} />
                     </div>
-                    <div className="col-md-7 col-lg-8">
-                        <BillingAddress state={state} onHandleChange={onHandleChange} validator={validator} setAddress={setAddress} updateDetails={updateDetails} />
+                    <div className="col-lg-4 pb-3">
+                        <label>Last Name</label>
+                        <input type="text" name="lastName" className="form-control" value={state.lastName} onChange={onHandleChange} />
                     </div>
+                    <div className="col-lg-4 pb-3">
+                        <label>Email Address</label>
+                        <input type="email" name="email" className="form-control" value={state.email} readOnly />
+                    </div>
+                    <div className="col-lg-4 pb-3">
+                        <label>Phone Number</label>
+                        <input type="text" name="phone" className="form-control" value={state.phone} onChange={onHandleChange} />
+                        <span className="error-message">{validator.current.message('Phone Number', state.phone, 'phone')}</span>
+                    </div>
+                </form>
+            </div>
+        </section>
+        <section>
+            <h5 className='p-3 border-dashed tab-description-heading'>Contact Information</h5>
+            <div className='card border-0 shadow-sm p-3 my-2'>
+                <form id="form" className="form-group flex-wrap row">
+                    <div className="col-lg-4 pb-3 find-address-section">
+                        <label>Find My Address</label>
+                        <PostcodeLookupComponent onAddressSelected={(address) => setAddress(address)} />
+                    </div>
+                    <div className="col-lg-4 pb-3">
+                        <label>Address</label>
+                        <input type="text" name="address" className="form-control" value={state.address} readOnly />
+                    </div>
+                    <div className="col-lg-4 pb-3">
+                        <label>Postcode</label>
+                        <input id="postcode" type="text" name="postcode" className="form-control" value={state.postcode} readOnly />
+                    </div>
+                </form>
+                <div className='text-center'>
+                    <button type='button' className="btn btn-primary text-uppercase" onClick={updateDetails}>Save</button>
                 </div>
             </div>
         </section>
-    </>
+    </div>
 }
 
-export default Checkout;
+export default MyProfile

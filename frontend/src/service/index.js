@@ -42,6 +42,7 @@ api.defaults.headers.common['Authorization'] = getCookie('dailyBasket') || ''
 const baseUrl = {
     auth: '/api/auth/',
     user: '/api/user/',
+    order: '/api/order/',
 }
 
 export const signUpService = {
@@ -54,4 +55,8 @@ export const signUpService = {
     getUserDetails: (data) => api.post(baseUrl.user + `get`, data, statusCheck).then(onSuccess, onError),
     updateUserDetails: (data) => api.post(baseUrl.user + `update`, data, statusCheck).then(onSuccess, onError),
     addProductToWishlist: (data) => api.post(baseUrl.user + `wishlist`, data, statusCheck).then(onSuccess, onError),
+
+    createOrder: (data) => api.post(baseUrl.order + `create`, data, statusCheck).then(onSuccess, onError),
+    getOrders: (data) => api.get(baseUrl.order, data, statusCheck).then(onSuccess, onError),
+    getScheduledOrders: (data) => api.get(baseUrl.order + `scheduled`, data, statusCheck).then(onSuccess, onError),
 }

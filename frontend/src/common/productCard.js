@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess } from "../redux/slices/userSlice";
 import { addToCart } from "../redux/slices/cartSlice";
 import { useMemo } from "react";
-import { currencySymbol } from "./constant";
+import { currencySymbol, getPriceCalculation } from "./constant";
 
 const ProductCard = ({ item, style, isWishlist = false }) => {
     const { _id, userInfo } = useSelector((state) => state.user);
@@ -29,7 +29,7 @@ const ProductCard = ({ item, style, isWishlist = false }) => {
     const onHandleWishlist = (pid) => {
         if (checkCookie('dailyBasket')) {
             element.style.display = 'block';
-            addProductToWishlist({ productId: pid, action: userInfo?.wishList?.includes(pid) ? false : true }, (res) => {
+            addProductToWishlist({ product_id: pid, action: userInfo?.wishList?.includes(pid) ? false : true }, (res) => {
                 if (res.status === 200 || res.status === 201) {
                     if (!userInfo?.wishList?.includes(pid)) {
                         toast.success(res.data.message, { position: "top-right" });
@@ -46,12 +46,12 @@ const ProductCard = ({ item, style, isWishlist = false }) => {
         }
     }
 
-    const onHandleCart = (productId) => {
+    const onHandleCart = (item) => {
         toast.success(`Product has been added to cart.`, { position: "top-right" });
         dispatch(addToCart({
             uid: _id ? _id : "",
             cartID: cartId,
-            items: { productId, qty: 1 }
+            items: { product_id: item.id, qty: 1, price: Number(getPriceCalculation(item)) }
         }))
     }
 
@@ -80,7 +80,7 @@ const ProductCard = ({ item, style, isWishlist = false }) => {
             </div>
         </div>
         <div className="product-card-footer">
-            <span className="btn btn-primary rounded-1 p-2 fs-7 w-100" onClick={() => onHandleCart(item.id)}>
+            <span className="btn btn-primary rounded-1 p-2 fs-7 w-100" onClick={() => onHandleCart(item)}>
                 <svg width="18" height="18">
                     <use xlinkHref="#cart"></use>
                 </svg>

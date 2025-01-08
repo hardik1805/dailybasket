@@ -119,6 +119,23 @@ export function addProductToWishlist(data, next) {
     })
 }
 
+export function createOrder(data, next) {
+    signUpService.createOrder(data).then(response => {
+        if (next) next(response)
+    })
+}
+
+export function getOrders(data, next) {
+    signUpService.getOrders(data).then(response => {
+        if (next) next(response)
+    })
+}
+
+export function getScheduledOrders(data, next) {
+    signUpService.getScheduledOrders(data).then(response => {
+        if (next) next(response)
+    })
+}
 
 // export function signOut(data, next) {
 //     return (dispatch, getState) => {
