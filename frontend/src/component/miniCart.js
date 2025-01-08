@@ -50,7 +50,6 @@ const MiniCart = ({ isTotal = false, scheduleDelivery, phoneNumber, address }) =
     const finalTotal = cartInfo.items.reduce((sum, row) => sum + Number(getPriceCalculation(row) * row.qty), 0)
 
     const onCreateOrder = (data, actions) => {
-        element.style.display = 'block';
         return actions.order.create({
             purchase_units: [
                 {
@@ -63,6 +62,7 @@ const MiniCart = ({ isTotal = false, scheduleDelivery, phoneNumber, address }) =
     }
 
     const onApproveOrder = (data, actions) => {
+        element.style.display = 'block';
         console.log("data:-", data, actions);
         actions.order.capture().then((details) => {
             console.log("details:-", details);
