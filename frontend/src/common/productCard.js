@@ -29,7 +29,7 @@ const ProductCard = ({ item, style, isWishlist = false }) => {
     const onHandleWishlist = (pid) => {
         if (checkCookie('dailyBasket')) {
             element.style.display = 'block';
-            addProductToWishlist({ product_id: pid, action: userInfo?.wishList?.includes(pid) ? false : true }, (res) => {
+            addProductToWishlist({ productId: pid, action: userInfo?.wishList?.includes(pid) ? false : true }, (res) => {
                 if (res.status === 200 || res.status === 201) {
                     if (!userInfo?.wishList?.includes(pid)) {
                         toast.success(res.data.message, { position: "top-right" });
