@@ -5,7 +5,7 @@ const HeroBanner = () => {
     return (<section style={{ backgroundImage: `url(${heroBanner.bannerImage})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
         <div className="container-lg">
             <div className="row">
-                <div className="col-lg-6 pt-5 mt-5">
+                <div className="col-xl-6 col-md-12 col-md-12 pt-5 mt-5">
                     <h2 className="display-1 ls-1" dangerouslySetInnerHTML={{ __html: heroBanner.title }}></h2>
                     <p className="fs-4">{heroBanner.subTitle}</p>
                     <div className="d-flex gap-3">
@@ -29,14 +29,13 @@ const HeroBanner = () => {
                 {heroBanner.advertisementTag.map((item) => {
                     return <div key={item.title} className="col">
                         <div className={`card border-0 ${item.class} rounded-0 p-4 text-light`}>
-                            <div className="row">
+                            <div className="row"  style={{ alignItems: 'center' }}>
                                 <div className="col-md-3 text-center">
                                     {item.svgImage}
                                 </div>
                                 <div className="col-md-9">
                                     <div className="card-body p-0">
                                         <h5 className="text-light">{item.title}</h5>
-                                        <p className="card-text">{item.info}</p>
                                     </div>
                                 </div>
                             </div>

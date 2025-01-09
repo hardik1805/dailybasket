@@ -1,6 +1,6 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import Layout from "./common/layout";
-import { Cart, Checkout, EmailVerification, VerifyCode, ResetPassword, LandingPage, OrderConfirmation, ProductDetail, ProductListing, BestSellingProductListing, SignIn, SignUp } from "./container";
+import { Cart, Checkout, EmailVerification, VerifyCode, ResetPassword, LandingPage, OrderConfirmation, ProductDetail, ProductListing, BestSellingProductListing, SignIn, SignUp, AboutUs, PrivacyPolicy } from "./container";
 import Profile from "./container/profile/profile";
 
 const router = createBrowserRouter([
@@ -55,6 +55,14 @@ const router = createBrowserRouter([
     {
         path: "/profile",
         element: <Layout><Profile /></Layout>
+    },
+    {
+        path: "/about-us",
+        element: <Layout><AboutUs /></Layout>
+    },
+    {
+        path: "/privacy-policy",
+        element: <Layout><PrivacyPolicy /></Layout>
     },
     {
         path: "*",

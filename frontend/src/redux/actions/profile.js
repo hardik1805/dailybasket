@@ -137,6 +137,18 @@ export function getScheduledOrders(data, next) {
     })
 }
 
+export function cancelOrder(data, next) {
+    signUpService.cancelOrder(data).then(response => {
+        if (next) next(response)
+    })
+}
+
+export function cancelScheduledOrders(data, next) {
+    signUpService.cancelScheduledOrders(data).then(response => {
+        if (next) next(response)
+    })
+}
+
 // export function signOut(data, next) {
 //     return (dispatch, getState) => {
 //         signUpService.signOut(data).then(response => {

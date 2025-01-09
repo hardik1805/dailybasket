@@ -59,4 +59,6 @@ export const signUpService = {
     createOrder: (data) => api.post(baseUrl.order + `create`, data, statusCheck).then(onSuccess, onError),
     getOrders: (data) => api.get(baseUrl.order, data, statusCheck).then(onSuccess, onError),
     getScheduledOrders: (data) => api.get(baseUrl.order + `scheduled`, data, statusCheck).then(onSuccess, onError),
+    cancelOrder: (data) => api.post(baseUrl.order + `cancel`, data, statusCheck).then(onSuccess, onError),
+    cancelScheduledOrders: (data) => api.post(baseUrl.order + `cancel-schedule`, data, statusCheck).then(onSuccess, onError),
 }

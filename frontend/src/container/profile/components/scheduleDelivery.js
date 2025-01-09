@@ -1,58 +1,91 @@
-import { useMemo } from "react";
-import { getScheduledOrders } from "../../../redux/actions/profile";
+import { toast } from "react-toastify"
+import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserScheduledOrders } from "../../../redux/slices/userSlice";
-import { toast } from "react-toastify";
+import { cancelScheduledOrders, getOrders } from "../../../redux/actions/profile"
+import { setUserOrderDetails } from "../../../redux/slices/userSlice"
+import { useMemo } from "react";
+import { category, currencySymbol, formatDate, getProductDetail } from "../../../common/constant";
 
 const ScheduleDeliveryList = () => {
     const dispatch = useDispatch();
-    const { userScheduledOrders } = useSelector((state) => state.user);
+    const navigate = useNavigate();
+    const { userOrderDetails } = useSelector((state) => state.user);
     const element = document.getElementById("preloader");
+
+    const getUpdatedOrders = () => {
+        getOrders('', (res) => {
+            element.style.display = 'none'
+            if (res.status === 200 || res.status === 201) {
+                dispatch(setUserOrderDetails(res.data.orders))
+            } else {
+                toast.error(res.data.message, { position: "top-right" });
+            }
+        })
+    }
 
     useMemo(() => {
         element.style.display = 'block'
-        getScheduledOrders('', (res) => {
-            console.log("res=", res);
-            element.style.display = 'none'
-            if (res.status === 200 || res.status === 201) {
-                dispatch(setUserScheduledOrders(res.data.orders))
-            } else {
-                toast.error(res?.response?.data?.message, { position: "top-right" });
-            }
-        })
+        getUpdatedOrders()
     }, [])
 
-    const renderScheduleList = useMemo(() => {
-        console.log("userScheduledOrders:-", userScheduledOrders);
-    }, [userScheduledOrders])
+    const onHandleCancel = (item) => {
+        element.style.display = 'block'
+        cancelScheduledOrders({ order_id: item._id }, (res) => {
+            if (res.status === 200 || res.status === 201) {
+                toast.success(res.data.message, { position: "top-right" });
+                getUpdatedOrders()
+            } else {
+                element.style.display = 'none'
+                toast.error(res.data.message, { position: "top-right" });
+            }
+        })
+    }
 
-    return <div className="col-md-8 col-lg-9 col-xl-10 col-xxl-10">
-        <h5 className='p-3 border-dashed tab-description-heading'>Delivery Information</h5>
-        <div className='card border-0 shadow-sm p-3'>
-            <div className="row row-cols-1 row-cols-sm-3 row-cols-lg-4">
-                {[1, 2, 3, 4, 5, 6].map((item) => {
-                    return <div key={item} className="col mt-3">
-                        <div className="delivery-info card mb-3 border border-dark-subtle p-2">
-                            <button type="button" className="btn-close"></button>
-                            <div className="delivery-info-body card-body p-0">
-                                <h6 className="d-flex">
-                                    <svg width="32" height="32">
-                                        <use xlinkHref="#secure"></use>
-                                    </svg>
-                                    1205654815
-                                </h6>
-                                <p className="card-text">
-                                    <b>Next Delivery :</b> <span>11/12/2025</span>
-                                </p>
-                                <p className="card-text">
-                                    <b>Remaining :</b> <span>3</span>
-                                </p>
+    const renderOrderList = useMemo(() => {
+        return userOrderDetails.length ? (userOrderDetails.filter(_ => _.status !== "cancelled")).map((item) => {
+            const { _id, products, updatedAt, deliveryDate, total_amount } = item
+            const { id, image, name, info, categoryId } = getProductDetail(products[0]);
+            const categoryDetail = category.find(_ => _.id === Number(categoryId))
+
+            return <li className="col-xl-6 col-12 list-group-item lg-d-flex justify-content-between lh-sm">
+                <div className='orders-product-info d-flex w-100 gap-3'>
+                    <div style={{ width: '100px', textAlign: 'center' }}>
+                        <img src={image} alt="product name" className="img-fluid" style={{ height: "70px" }} />
+                    </div>
+                    <div className='w-100'>
+                        <div className='d-grid mb-2' style={{ lineHeight: '1.5' }}>
+                            <b className="text-body-secondary mb-0">Order# {_id}</b>
+                            <small className="text-body-secondary">Ordered on {formatDate(updatedAt)}</small>
+                            <small className="text-body-secondary">Expected Delivery Date {formatDate(deliveryDate)}</small>
+                            <small className="text-body-secondary">Order Total {currencySymbol}{total_amount}</small>
+                        </div>
+                        <div className="product-info">
+                            <h6 className="pb-1" style={{ cursor: 'pointer' }} onClick={() => navigate(`/product?id=${id}`)}>{name}</h6>
+                            <p className="m-0 pb-1" style={{ wordBreak: "break-word" }}>{info}</p>
+                            <div className="meta-product pt-2">
+                                <div className="d-flex" style={{ alignItems: 'center', justifyContent: 'space-between' }}>
+                                    <div className="meta-item d-flex align-items-baseline">
+                                        <h6 className="item-title no-margin pe-2">Category:</h6>
+                                        <span>{categoryDetail.name}</span>
+                                    </div>
+                                    {new Date(deliveryDate) > new Date() && <button type="button" className="btn btn-outline-primary btn-sm" onClick={() => onHandleCancel(item)}>Cancel</button>}
+                                </div>
                             </div>
                         </div>
                     </div>
-                })}
+                </div>
+            </li>
+        }) : null
+    }, [userOrderDetails])
 
-            </div>
+    return <div className="col-md-8 col-lg-9 col-xl-10 col-xxl-10">
+        <h5 className='p-3 border-dashed tab-description-heading'>Delivery Information</h5>
+        <div className='card border-0 shadow-sm p-3 gap-2'>
+            <section className='col order-product-list'>
+                <ul className="list-group mb-3 d-flex" style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                    {renderOrderList}
+                </ul>
+            </section>
         </div>
     </div>
 }

@@ -413,10 +413,6 @@ h6 {
   }
 
   ul {
-    li {
-      cursor: pointer;
-    }
-
     li:hover {
       background: #f8f8f8;
     }
@@ -1003,6 +999,12 @@ a.btn-link.text-light:after {
 /* ============ mobile view .end// ============ */
 
 @media(max-width: 600px) {
+  .orders-product-info {
+    display: grid !important;
+    align-items: center;
+    justify-items: center;
+  }
+
   .footer-container {
     footer {
       padding-bottom: 0 !important;

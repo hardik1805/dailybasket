@@ -34,10 +34,10 @@ const Footer = () => {
                                 <h5 className="widget-title">Daily Basket</h5>
                                 <ul className="menu-list list-unstyled">
                                     <li className="menu-item">
-                                        <a href="/" className="nav-link">About us</a>
+                                        <Link to="/about-us" className="nav-link">About us</Link>
                                     </li>
                                     <li className="menu-item">
-                                        <a href="/" className="nav-link">Privacy Policy</a>
+                                        <Link to="/privacy-policy" className="nav-link">Privacy Policy</Link>
                                     </li>
                                 </ul>
                             </div>

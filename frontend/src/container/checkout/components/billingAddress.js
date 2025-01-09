@@ -58,7 +58,9 @@ const BillingAddress = ({ state, onHandleChange, validator, setAddress, updateDe
                 </>}
             </form>
             <div className='text-center'>
-                <button type='button' className="btn btn-primary text-uppercase" style={{ width: 'fit-content' }} onClick={updateDetails}>Update Info</button>
+                <button type='button' className="btn btn-primary text-uppercase" style={{ width: 'fit-content' }} onClick={updateDetails}>
+                    {state.phone?.length >= 10 && state.address ? "Update Info" : "Submit"}
+                </button>
             </div>
         </div>
     </section>

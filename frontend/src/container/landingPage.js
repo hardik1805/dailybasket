@@ -71,7 +71,7 @@ const LandingPage = () => {
 
         <section className="py-5">
             <div className="container-lg">
-                <div className="row row-cols-1 row-cols-sm-3 row-cols-lg-5">
+                <div className="row row-cols-1 row-cols-sm-3 row-cols-lg-4">
                     <div className="col">
                         <div className="card mb-3 border border-dark-subtle p-3">
                             <div className="text-dark mb-3">
@@ -81,7 +81,7 @@ const LandingPage = () => {
                             </div>
                             <div className="card-body p-0">
                                 <h5>Free delivery</h5>
-                                <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
+                                <p className="card-text">Order online and get your groceries delivered right to your doorstep.</p>
                             </div>
                         </div>
                     </div>
@@ -94,7 +94,7 @@ const LandingPage = () => {
                             </div>
                             <div className="card-body p-0">
                                 <h5>100% secure payment</h5>
-                                <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
+                                <p className="card-text">Enjoy a safe and secure shopping experience.</p>
                             </div>
                         </div>
                     </div>
@@ -107,7 +107,7 @@ const LandingPage = () => {
                             </div>
                             <div className="card-body p-0">
                                 <h5>Quality guarantee</h5>
-                                <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
+                                <p className="card-text">Experience the difference: Quality guaranteed on all products.</p>
                             </div>
                         </div>
                     </div>
@@ -119,21 +119,8 @@ const LandingPage = () => {
                                 </svg>
                             </div>
                             <div className="card-body p-0">
-                                <h5>guaranteed savings</h5>
-                                <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col">
-                        <div className="card mb-3 border border-dark-subtle p-3">
-                            <div className="text-dark mb-3">
-                                <svg width="32" height="32">
-                                    <use xlinkHref="#offers"></use>
-                                </svg>
-                            </div>
-                            <div className="card-body p-0">
-                                <h5>Daily offers</h5>
-                                <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
+                                <h5>Guaranteed savings</h5>
+                                <p className="card-text">Find incredible deals and guaranteed savings on all your grocery needs.</p>
                             </div>
                         </div>
                     </div>

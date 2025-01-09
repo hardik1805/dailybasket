@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess } from "../redux/slices/userSlice";
 import { addToCart } from "../redux/slices/cartSlice";
 import { useMemo } from "react";
-import { currencySymbol, getPriceCalculation } from "./constant";
+import { ageVerificationText, currencySymbol, getPriceCalculation, getProductDetail } from "./constant";
 
 const ProductCard = ({ item, style, isWishlist = false }) => {
     const { _id, userInfo } = useSelector((state) => state.user);
@@ -66,6 +66,23 @@ const ProductCard = ({ item, style, isWishlist = false }) => {
             </svg>
     }, [userInfo])
 
+    const ageVerifictionValidation = (item) => {
+        const productDetails = getProductDetail({ product_id: item.id })
+        if (productDetails.categoryId === 2 || productDetails.categoryId === 3) {
+            return <Link to={`/product?id=${item.id}`} className="btn btn-primary rounded-1 p-2 fs-7 w-100">
+                Verify Your Age
+            </Link>
+        } else {
+            return <span className="btn btn-primary rounded-1 p-2 fs-7 w-100 d-flex" style={{ alignItems: 'center', justifyContent: 'center' }} onClick={() => onHandleCart(item)}>
+                <svg width="18" height="18">
+                    <use xlinkHref="#cart"></use>
+                </svg>
+                &nbsp;
+                Add to Cart
+            </span>
+        }
+    }
+
     return <div key={item.name} className="product-item" style={style}>
         <figure>
             <Link to={`/product?id=${item.id}`} title={item.name}>
@@ -80,12 +97,7 @@ const ProductCard = ({ item, style, isWishlist = false }) => {
             </div>
         </div>
         <div className="product-card-footer">
-            <span className="btn btn-primary rounded-1 p-2 fs-7 w-100" onClick={() => onHandleCart(item)}>
-                <svg width="18" height="18">
-                    <use xlinkHref="#cart"></use>
-                </svg>
-                Add to Cart
-            </span>
+            {ageVerifictionValidation(item)}
             {!isWishlist && updateHeart}
         </div>
     </div >

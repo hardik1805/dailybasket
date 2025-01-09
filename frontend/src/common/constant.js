@@ -59,8 +59,8 @@ export const currencySymbol = "£";
 
 export const heroBanner = {
     bannerImage: Banner1,
-    title: "<span class='fw- bold text-primary'>Organic</span> Foods at your <span class='fw - bold'>Doorsteps</span>",
-    subTitle: "Dignissim massa diam elementum.",
+    title: "<span class='fw- bold text-primary'>DailyBasket</span> Foods at your <span class='fw - bold'>Doorsteps</span>",
+    subTitle: "",
     portfolioText: [{
         views: "14k+",
         text: "Product Varieties"
@@ -77,19 +77,16 @@ export const heroBanner = {
         class: "bg-primary",
         svgImage: <svg width="60" height="60"><use xlinkHref="#fresh"></use></svg>,
         title: "Fresh from farm",
-        info: "Lorem ipsum dolor sit amet, consectetur adipi elit."
     },
     {
         class: "bg-secondary",
         svgImage: <svg width="60" height="60"><use xlinkHref="#organic"></use></svg>,
         title: "100% Organic",
-        info: "Lorem ipsum dolor sit amet, consectetur adipi elit."
     },
     {
         class: "bg-danger",
         svgImage: <svg width="60" height="60"><use xlinkHref="#delivery"></use></svg>,
         title: "Free delivery",
-        info: "Lorem ipsum dolor sit amet, consectetur adipi elit."
     }]
 }
 

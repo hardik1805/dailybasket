@@ -15,6 +15,9 @@ import Checkout from './checkout/checkout';
 
 import OrderConfirmation from './orderConfirmation';
 
+import AboutUs from './staticPage/aboutUs';
+import PrivacyPolicy from './staticPage/privacyPolicy';
+
 export {
     LandingPage,
     SignIn,
@@ -27,5 +30,7 @@ export {
     ProductDetail,
     Cart,
     Checkout,
-    OrderConfirmation
+    OrderConfirmation,
+    AboutUs,
+    PrivacyPolicy
 }
