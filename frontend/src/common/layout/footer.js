@@ -13,20 +13,6 @@ const Footer = () => {
                                     <img src={Logo} height="70" alt="logo" />
                                     <div className="logo-text-footer"><span><b>D</b>aily</span><span><b>B</b>asket</span></div>
                                 </Link>
-                                <div className="social-links mt-3">
-                                    <ul className="d-flex list-unstyled gap-2">
-                                        <li>
-                                            <a href="/" className="btn btn-outline-light">
-                                                <svg width="16" height="16"><use xlinkHref="#facebook"></use></svg>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="/" className="btn btn-outline-light">
-                                                <svg width="16" height="16"><use xlinkHref="#instagram"></use></svg>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
                             </div>
                         </div>
                         <div className="col-xl-2 col-lg-2 col-md-2 col-sm-6">

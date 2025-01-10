@@ -1,7 +1,8 @@
 @import "assets/style/vendor.scss";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 body {
-  --heading-font: "Inter", sans-serif;
+  --heading-font: "Montserrat", sans-serif;
   --bs-link-color: #333;
   --bs-link-hover-color: #333;
 
@@ -10,10 +11,10 @@ body {
 
   --bs-light-rgb: 248, 248, 248;
 
-  --bs-font-sans-serif: "Inter", sans-serif;
+  --bs-font-sans-serif: "Montserrat", sans-serif;
   --bs-body-font-family: var(--bs-font-sans-serif);
   --bs-body-font-size: 1rem;
-  --bs-body-font-weight: 400;
+  --bs-body-font-weight: 500;
   --bs-body-line-height: 2;
   --bs-body-color: #747474;
 
