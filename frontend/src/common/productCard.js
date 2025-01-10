@@ -68,7 +68,7 @@ const ProductCard = ({ item, style, isWishlist = false }) => {
 
     const ageVerifictionValidation = (item) => {
         const productDetails = getProductDetail({ product_id: item.id })
-        if (productDetails.categoryId === 2 || productDetails.categoryId === 3) {
+        if (productDetails?.categoryId === 2 || productDetails?.categoryId === 3) {
             return <Link to={`/product?id=${item.id}`} className="btn btn-primary rounded-1 p-2 fs-7 w-100">
                 Verify Your Age
             </Link>

@@ -18,7 +18,7 @@ const MyOrders = () => {
             if (res.status === 200 || res.status === 201) {
                 dispatch(setUserOrderDetails(res.data.orders))
             } else {
-                toast.error(res.data.message, { position: "top-right" });
+                toast.error(res?.response?.data?.message, { position: "top-right" });
             }
         })
     }
@@ -42,7 +42,7 @@ const MyOrders = () => {
     }
 
     const renderOrderList = useMemo(() => {
-        return userOrderDetails.length ? (userOrderDetails.filter(_ => _.status !== "cancelled")).map((item) => {
+        return userOrderDetails?.length ? (userOrderDetails.filter(_ => _.status !== "cancelled")).map((item) => {
             const { _id, products, updatedAt, deliveryDate, total_amount } = item
             const { id, image, name, info, categoryId } = getProductDetail(products[0]);
             const categoryDetail = category.find(_ => _.id === Number(categoryId))

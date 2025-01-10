@@ -779,19 +779,7 @@ export const product = [
         discount: 0,
         categoryId: 5,
         isBestSelling: true,
-    }, {
-        id: 47,
-        name: "Cadbury Dairy Milk Fruit and Nut Chocolate Bar 180g",
-        image: P38,
-        stock: 20,
-        isFavourite: false,
-        Description: 'big ',
-        info: 'MILK**, sugar, dried grapes, cocoa butter, ALMONDS, cocoa mass, vegetable fats (palm, shea), emulsifiers (E442, E476), flavourings. **The equivalent of 426 ml of fresh liquid milk in every 227 g of milk chocolate. Milk Chocolate: Milk Solids 20 % Minimum, Actual 23 %. Cocoa Solids 20 % Minimum. Contains Vegetable Fats In Addition To Cocoa Butter., MAY CONTAIN OTHER NUTS, WHEAT.',
-        unitPrice: 2.50,
-        discount: 0,
-        categoryId: 5,
-        isBestSelling: true,
-    }, {
+    },  {
         id: 48,
         name: "Cadbury Dairy Milk Whole Nut Chocolate Bar 180g",
         image: P48,
@@ -5723,7 +5711,7 @@ export const promotionalBanner = [
     { title: "Items on SALE", discount: "Discounts up to 25%", image: BannerAd3, link: "/category?discount=25", class: "banner-ad bg-danger block-3" },
 ]
 
-export const ageVerificationText = "Yes, I confirm that I am 21 years of age or older."
+export const ageVerificationText = "Yes, I confirm that I am 18 years of age or older."
 
 export const checkValidStock = (stock, existingQty, actualQty) => {
     return Number(stock) >= Number((existingQty > 0 ? actualQty + existingQty : actualQty))

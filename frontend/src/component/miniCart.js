@@ -109,8 +109,8 @@ const MiniCart = ({ isTotal = false, scheduleDelivery, phoneNumber, address }) =
                 return <>
                     <li className="list-group-item d-flex justify-content-between lh-sm" >
                         <div>
-                            <h6 className="my-0" onClick={() => navigate(`/product?id=${item.product_id}`)} style={{ cursor: "pointer" }}>{getProductDetails(item.product_id).name}</h6>
-                            <small className="text-body-secondary">{getProductDetails(item.product_id).info}</small>
+                            <p className="my-0" onClick={() => navigate(`/product?id=${item.product_id}`)} style={{ cursor: "pointer" }}>{getProductDetails(item.product_id).name}</p>
+                            {/*<small className="text-body-secondary">{getProductDetails(item.product_id).info}</small>*/}
                         </div>
                         <div className="d-flex gap-3">
                             <span>{item.qty}</span>
